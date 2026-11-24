@@ -1,0 +1,37 @@
+﻿Add_beneficiary_details.aspx
+AddBVPoint.aspx
+AddDirectIDMaster.aspx
+AddPackage.aspx
+AddPopup.aspx
+AdminHome.aspx
+AdminHomeGH.aspx
+AdminHomeNew.aspx
+amontRecivedsalecredit.aspx
+AmountReceivedByEMI.aspx
+ApproveSeminarReqs.aspx
+BookingRequestDetail.aspx
+CategoryMaster.aspx
+Default.aspx
+Downline.aspx
+EMIReminder.aspx
+FixedTree1.aspx
+GroceryDetail_DAtewise.aspx
+GroupRefDirects.aspx
+GroupzaraDirects.aspx
+Home.aspx
+Idverified.aspx
+LegShift.aspx
+LifeAdminHome.aspx
+Mission365view.aspx
+MyDirects.aspx
+NewTree - Copy.aspx
+NewTree.aspx
+NewTree.aspx - Copy
+onlinetransactionnew.aspx
+PackageMaster.aspx
+PlotDiscountBonus.aspx
+Referaltree.aspx
+SubCategoryMaster.aspx
+treeCommunity.aspx
+UniTree.aspx
+WUCMenu.ascx

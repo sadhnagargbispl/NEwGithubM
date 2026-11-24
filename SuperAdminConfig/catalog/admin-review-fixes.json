@@ -1,0 +1,6 @@
+﻿{
+  "settings": [
+    { "key": "addbvpointts.type_caption", "panel": "admin", "page": "AddBVPointTS.aspx", "kind": "label", "label": "Add BV Point page: caption of the point type field", "today": "\"BV Type\" (value name + Type); 1112 = \"SP Type\"", "where": "AddBVPointTS.aspx" },
+    { "key": "addbvpointts.point_caption", "panel": "admin", "page": "AddBVPointTS.aspx", "kind": "label", "label": "Add BV Point page: caption of the point field", "today": "\"BV Point\" (value name + Point); 1112 = \"SP Point\"", "where": "AddBVPointTS.aspx" }
+  ]
+}

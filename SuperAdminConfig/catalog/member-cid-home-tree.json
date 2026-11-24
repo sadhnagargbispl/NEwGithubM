@@ -1,0 +1,33 @@
+{ "settings": [
+    { "key": "wucmenu.no_portal_login_links", "panel": "member", "page": "WUCMenu.ascx", "kind": "switch", "label": "Side menu does not build the single-sign-on links (login key, cashback, shopping, mart, movie, utility portals)", "today": "On for 1077 - off for others", "where": "WUCMenu.ascx.cs:126, 154" },
+    { "key": "refindex.richnet_rank_business_rewards", "panel": "member", "page": "RefIndex.aspx", "kind": "switch", "label": "Reward list on the dashboard comes from sp_RichNetRankBusiness (instead of the reward detail view)", "today": "On for 1077 - off for others", "where": "RefIndex.aspx.cs:164" },
+    { "key": "refindex.income_from_table7", "panel": "member", "page": "RefIndex.aspx", "kind": "switch", "label": "My Income box reads the 8th result of sp_LoadTeam1 (instead of the 5th)", "today": "On for 1077 - off for others", "where": "RefIndex.aspx.cs:275" },
+    { "key": "refindex.rank_from_table6", "panel": "member", "page": "RefIndex.aspx", "kind": "switch", "label": "Rank title is taken from the 7th result of sp_LoadTeam1 when present", "today": "On for 1003, 1007 - off for others", "where": "RefIndex.aspx.cs:323" },
+    { "key": "indext.dashboard_income_from_chqamt", "panel": "member", "page": "IndexT.aspx", "kind": "switch", "label": "Dashboard total income procedure sums the cheque amount (chqAmt) of published months only (instead of all dashboard payout columns)", "today": "On for 1106 - off for others", "where": "IndexT.aspx.cs:162" },
+    { "key": "indext.rank_news_from_tables_6_4", "panel": "member", "page": "IndexT.aspx", "kind": "switch", "label": "Rank title and news read from the newer result layout (7th and 5th results instead of 6th and 4th)", "today": "On for 1007, 1074, 1091, 1095, 1097, 1100, 1102, 1105, 1106, 1107, 1108, 1109, 1110 - off for others", "where": "IndexT.aspx.cs:449" },
+    { "key": "indexgreen.referral_link_from_api", "panel": "member", "page": "IndexGreen.aspx", "kind": "switch", "label": "Referral link is fetched from the company's own API (ProcessAPIWithK) and shown in the update link box", "today": "On for 1106 - off for others", "where": "IndexGreen.aspx.cs:32" },
+    { "key": "indexgreen.dashboard_income_from_chqamt", "panel": "member", "page": "IndexGreen.aspx", "kind": "switch", "label": "Dashboard total income procedure sums the cheque amount (chqAmt) of published months only (instead of all dashboard payout columns)", "today": "On for 1106 - off for others", "where": "IndexGreen.aspx.cs:893" },
+    { "key": "indexgreen.rank_news_income_from_tables_6_4_5", "panel": "member", "page": "IndexGreen.aspx", "kind": "switch", "label": "Rank, news and income read from the newer result layout (7th, 5th, 6th results instead of 6th, 4th, 5th)", "today": "On for 1100, 1102, 1105, 1106, 1107, 1108, 1109, 1110 - off for others", "where": "IndexGreen.aspx.cs:1239" },
+    { "key": "indextb.referral_link_from_api", "panel": "member", "page": "Indextb.aspx", "kind": "switch", "label": "Referral link is fetched from the company's own API (ProcessAPIWithK) and shown in the update link box", "today": "On for 1106 - off for others", "where": "Indextb.aspx.cs:37" },
+    { "key": "indextb.left_right_links_from_api", "panel": "member", "page": "Indextb.aspx", "kind": "switch", "label": "Left / right share links are fetched from the company's own API (ProcessAPIWithK) instead of being built from the short URL", "today": "On for 1112 - off for others", "where": "Indextb.aspx.cs:237" },
+    { "key": "indextb.income_title", "panel": "member", "page": "Indextb.aspx", "kind": "label", "label": "Title of the Total Income box on the dashboard", "today": "Total Bonus for 1111, 1113, 1114 - Total Income for others (GitHub merge 2026-11-18: also set for 1115)", "where": "Indextb.aspx.cs:300 (used by Indextb.aspx:1135)" },
+    { "key": "indextb.dashboard_income_from_chqamt", "panel": "member", "page": "Indextb.aspx", "kind": "switch", "label": "Dashboard total income procedure sums the cheque amount (chqAmt) of published months only (instead of all dashboard payout columns)", "today": "On for 1106 - off for others", "where": "Indextb.aspx.cs:1074" },
+    { "key": "indextb.total_directs_kit_proc", "panel": "member", "page": "Indextb.aspx", "kind": "switch", "label": "Total directs counts only members with an active kit (creates/alters Sp_TotalDirects with the kit filter)", "today": "On for 1113 - off for others", "where": "Indextb.aspx.cs:1228" }
+  ],
+  "reused_seeded": [
+    "newtree.tree_js_runcha/new/ev/dv9/bv/dv/solfit/nityaprabha/pv_tooltip (Newtree.aspx:40-78) and newtree.legs_group_ab (Newtree.aspx.cs:75) - keys already in member-team.json, seed rows added here",
+    "newtreeupdate.tree_js_runcha/new/ev/dv9/bv/dv/solfit/nityaprabha (NewTreeUpdate.aspx:12-40) and newtreeupdate.legs_group_ab (NewTreeUpdate.aspx.cs:75) - keys already in member-team.json, seed rows added here",
+    "newtree/newtreeupdate.three_legs and legs_isp_bsp (.aspx.cs:62, 69) - keys and seeds already exist (08 seed); only the code default fixed",
+    "wucmenu.cashless_join_link, set_join_links, kit_redeem_check, hide_invoice_redeem_menus, rank_menu_by_registration_type (WUCMenu.ascx.cs:37, 44, 52, 271, 294) - keys already in member-kyc-profile.json, seed rows added here"
+  ],
+  "skipped": [
+    { "where": "Newtree.aspx:313-803", "reason": "whole old page version inside a server comment <%-- --%> (commented-out code, contains comp == \"1101\"... chain at 325-354) - not touched" },
+    { "where": "Indextb.aspx.cs:626-628", "reason": "commented-out code (old company list) - not touched" },
+    { "where": "Newtree.aspx:143, 678; NewTreeUpdate.aspx:420", "reason": "not a company id: -1000 (tooltip pixel offset in JS)" },
+    { "where": "CompanyImages.aspx:16-18", "reason": "test/demo page: hard-coded dropdown options 1001/1002/1003 labelled 'Company A/B/C' used only to preview ~/CompanyImages/<id>/ images; not a behaviour check. Lead to decide: delete the page or bind the dropdown to the company master" },
+    { "where": "Indextb.aspx.cs:1774, Indextb.aspx:2447, 2457, 2527", "reason": "not a company id: 1024 (bytes) / 1000 (ms timeout)" }
+  ],
+  "secrets": [
+    { "where": "WUCMenu.ascx.cs:118-119", "what": "AES Key and IV for the portal login key (LogKey) - used for every company except where wucmenu.no_portal_login_links is on; left in code" }
+  ]
+}

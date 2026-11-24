@@ -1,0 +1,1272 @@
+{
+    "settings":  [
+                     {
+                         "key":  "statementdailypb.income1_name_tpi",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings box, line 1 is named \"Team Performance Incentive\"",
+                         "today":  "On for 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx:215"
+                     },
+                     {
+                         "key":  "statementdailypb.income1_title_tpi",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 1 name (Team Performance Incentive version)",
+                         "today":  "shows \"Team Performance Incentive\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:217"
+                     },
+                     {
+                         "key":  "statementdailypb.income1_name_direct_bonus",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings box, line 1 is named \"Direct Bonus\"",
+                         "today":  "On for 1074 - off for others",
+                         "where":  "StatementDailyPB.aspx:219"
+                     },
+                     {
+                         "key":  "statementdailypb.income1_title_direct_bonus",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 1 name (Direct Bonus version)",
+                         "today":  "shows \"Direct Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:221"
+                     },
+                     {
+                         "key":  "statementdailypb.income1_name_direct_referral",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings box, line 1 is named \"Direct Referral Bonus\"",
+                         "today":  "On for 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx:223"
+                     },
+                     {
+                         "key":  "statementdailypb.income1_title_direct_referral",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 1 name (Direct Referral Bonus version)",
+                         "today":  "shows \"Direct Referral Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:225"
+                     },
+                     {
+                         "key":  "statementdailypb.income1_title_default",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 1 name (normal)",
+                         "today":  "shows \"Matching Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:229"
+                     },
+                     {
+                         "key":  "statementdailypb.income2_name_dri",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings box, line 2 is named \"Direct Referral Incentive\"",
+                         "today":  "On for 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx:241"
+                     },
+                     {
+                         "key":  "statementdailypb.income2_title_dri",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 2 name (Direct Referral Incentive version)",
+                         "today":  "shows \"Direct Referral Incentive\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:244"
+                     },
+                     {
+                         "key":  "statementdailypb.income2_name_reward_bonus",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings box, line 2 is named \"Reward Bonus\"",
+                         "today":  "On for 1074 - off for others",
+                         "where":  "StatementDailyPB.aspx:247"
+                     },
+                     {
+                         "key":  "statementdailypb.income2_title_reward_bonus",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 2 name (Reward Bonus version)",
+                         "today":  "shows \"Reward Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:250"
+                     },
+                     {
+                         "key":  "statementdailypb.income2_name_sponsor_matching",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings box, line 2 is named \"Sponsor Matching Income\"",
+                         "today":  "On for 1095, 1097 - off for others",
+                         "where":  "StatementDailyPB.aspx:253"
+                     },
+                     {
+                         "key":  "statementdailypb.income2_title_sponsor_matching",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 2 name (Sponsor Matching Income version)",
+                         "today":  "shows \"Sponsor Matching Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:256"
+                     },
+                     {
+                         "key":  "statementdailypb.income2_name_tpb",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings box, line 2 is named \"Team Performance Bonus\"",
+                         "today":  "On for 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx:259"
+                     },
+                     {
+                         "key":  "statementdailypb.income2_title_tpb",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 2 name (Team Performance Bonus version)",
+                         "today":  "shows \"Team Performance Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:262"
+                     },
+                     {
+                         "key":  "statementdailypb.income2_title_default",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 2 name (normal)",
+                         "today":  "shows \"Direct Sponsor Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:268"
+                     },
+                     {
+                         "key":  "statementdailypb.hide_income3_row",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Hide earnings line 3 (Sponsor Matching Income) on the daily statement",
+                         "today":  "On for 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx:280"
+                     },
+                     {
+                         "key":  "statementdailypb.income3_name_matching_bonus",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings box, line 3 is named \"Matching Bonus\"",
+                         "today":  "On for 1074 - off for others",
+                         "where":  "StatementDailyPB.aspx:289"
+                     },
+                     {
+                         "key":  "statementdailypb.income3_title_matching_bonus",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 3 name (Matching Bonus version)",
+                         "today":  "shows \"Matching Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:292"
+                     },
+                     {
+                         "key":  "statementdailypb.income3_name_reward_level",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings box, line 3 is named \"Reward Level Income\"",
+                         "today":  "On for 1095, 1097 - off for others",
+                         "where":  "StatementDailyPB.aspx:295"
+                     },
+                     {
+                         "key":  "statementdailypb.income3_title_reward_level",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 3 name (Reward Level Income version)",
+                         "today":  "shows \"Reward Level Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:298"
+                     },
+                     {
+                         "key":  "statementdailypb.income3_name_solar",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings box, line 3 is named \"Solar Connection Bonus\"",
+                         "today":  "On for 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx:301"
+                     },
+                     {
+                         "key":  "statementdailypb.income3_title_solar",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 3 name (Solar Connection Bonus version)",
+                         "today":  "shows \"Solar Connection Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:304"
+                     },
+                     {
+                         "key":  "statementdailypb.income3_title_default",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Earnings box, line 3 name (normal)",
+                         "today":  "shows \"Sponsor Matching Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:310"
+                     },
+                     {
+                         "key":  "statementdailypb.show_self_income_row",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the Self Repurchase Income line in the earnings box",
+                         "today":  "On for 1095, 1097, 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx:323"
+                     },
+                     {
+                         "key":  "statementdailypb.self_income_name_trip",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Self Repurchase line is named \"Bonus Incentive / Trip\"",
+                         "today":  "On for 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx:331"
+                     },
+                     {
+                         "key":  "statementdailypb.self_income_title_trip",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Self Repurchase line name (Bonus Incentive / Trip version)",
+                         "today":  "shows \"Bonus Incentive / Trip\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:334"
+                     },
+                     {
+                         "key":  "statementdailypb.self_income_title_default",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Self Repurchase line name (normal)",
+                         "today":  "shows \"Self Repurchase Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:340"
+                     },
+                     {
+                         "key":  "statementdailypb.hide_reward_row",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Hide the Reward Income line in the earnings box",
+                         "today":  "On for 1074, 1095, 1097, 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx:353"
+                     },
+                     {
+                         "key":  "statementdailypb.reward_name_leadership_rank",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Reward line is named \"Leadership Rank Incentive\"",
+                         "today":  "On for 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx:365"
+                     },
+                     {
+                         "key":  "statementdailypb.reward_title_leadership_rank",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Reward line name (Leadership Rank Incentive version)",
+                         "today":  "shows \"Leadership Rank Incentive\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:368"
+                     },
+                     {
+                         "key":  "statementdailypb.reward_title_default",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Reward line name (normal)",
+                         "today":  "shows \"Reward Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:374"
+                     },
+                     {
+                         "key":  "statementdailypb.hide_royalty_row",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Hide the Royalty Income line in the earnings box",
+                         "today":  "On for 1074 - off for others",
+                         "where":  "StatementDailyPB.aspx:386"
+                     },
+                     {
+                         "key":  "statementdailypb.royalty_name_solar",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Royalty line is named \"Solar Connection Incentive\"",
+                         "today":  "On for 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx:395"
+                     },
+                     {
+                         "key":  "statementdailypb.royalty_title_solar",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Royalty line name (Solar Connection Incentive version)",
+                         "today":  "shows \"Solar Connection Incentive\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:398"
+                     },
+                     {
+                         "key":  "statementdailypb.royalty_name_royalty",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Royalty line uses its 1095/1097 name (\"Royalty Income\")",
+                         "today":  "On for 1095, 1097 - off for others",
+                         "where":  "StatementDailyPB.aspx:401"
+                     },
+                     {
+                         "key":  "statementdailypb.royalty_title_royalty",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Royalty line name (1095/1097 version)",
+                         "today":  "shows \"Royalty Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:404"
+                     },
+                     {
+                         "key":  "statementdailypb.royalty_name_retail",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Royalty line is named \"Retail Bonus\"",
+                         "today":  "On for 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx:407"
+                     },
+                     {
+                         "key":  "statementdailypb.royalty_title_retail",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Royalty line name (Retail Bonus version)",
+                         "today":  "shows \"Retail Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:410"
+                     },
+                     {
+                         "key":  "statementdailypb.royalty_title_default",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Royalty line name (normal)",
+                         "today":  "shows \"Royalty Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:416"
+                     },
+                     {
+                         "key":  "statementdailypb.hide_leadership_dev_row",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Hide the Leadership Dev. Bonus line in the earnings box",
+                         "today":  "On for 1074, 1091, 1095, 1097, 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx:430"
+                     },
+                     {
+                         "key":  "statementdailypb.hide_total_earnings_row",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Hide the Total Earnings line inside the earnings box",
+                         "today":  "On for 1074, 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx:452"
+                     },
+                     {
+                         "key":  "statementdailypb.leg_names_left_right",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Business Details columns are called Left / Right (instead of Power Group / Weaker Group)",
+                         "today":  "On for 1095, 1097, 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx:622, 635"
+                     },
+                     {
+                         "key":  "statementdailypb.leg1_title_left",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Business Details, first column name (Left/Right version)",
+                         "today":  "shows \"Left\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:626"
+                     },
+                     {
+                         "key":  "statementdailypb.leg1_title_power_group",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Business Details, first column name (normal)",
+                         "today":  "shows \"Power Group\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:630"
+                     },
+                     {
+                         "key":  "statementdailypb.leg2_title_right",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Business Details, second column name (Left/Right version)",
+                         "today":  "shows \"Right\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:639"
+                     },
+                     {
+                         "key":  "statementdailypb.leg2_title_weaker_group",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Business Details, second column name (normal)",
+                         "today":  "shows \"Weaker Group\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:643"
+                     },
+                     {
+                         "key":  "statementdailypb.mentorship_title_single_side",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Mentorship table is titled \"Single Side Bonus Detail\"",
+                         "today":  "On for 1075 - off for others",
+                         "where":  "StatementDailyPB.aspx:698"
+                     },
+                     {
+                         "key":  "statementdailypb.mentorship_title_single_side_text",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Mentorship table title (Single Side version)",
+                         "today":  "shows \"Single Side Bonus Detail\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:700"
+                     },
+                     {
+                         "key":  "statementdailypb.mentorship_title_default",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Mentorship table title (normal)",
+                         "today":  "shows \"Mentorship Bonus Detail\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:704"
+                     },
+                     {
+                         "key":  "statementdailypb.mentorship_show_name_column",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the Name column in the mentorship table",
+                         "today":  "On for 1075 - off for others",
+                         "where":  "StatementDailyPB.aspx:712, 735"
+                     },
+                     {
+                         "key":  "statementdailypb.mentorship_show_matching_slab_columns",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the Matching Bonus and Slab columns in the mentorship table",
+                         "today":  "Off for 1075 - on for others",
+                         "where":  "StatementDailyPB.aspx:719, 746"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_title_upline",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Level income table is titled \"Upline Bonus\"",
+                         "today":  "On for 1023 - off for others",
+                         "where":  "StatementDailyPB.aspx:773"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_title_upline_text",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table title (Upline Bonus version)",
+                         "today":  "shows \"Upline Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:776"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_title_direct",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Level income table is titled \"Direct Income\"",
+                         "today":  "On for 1075 - off for others",
+                         "where":  "StatementDailyPB.aspx:779"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_title_direct_text",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table title (Direct Income version)",
+                         "today":  "shows \"Direct Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:782"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_title_sponsor_matching",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Level income table is titled \"Sponsor Matching Income\"",
+                         "today":  "On for 1090 - off for others",
+                         "where":  "StatementDailyPB.aspx:785"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_title_sponsor_matching_text",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table title (Sponsor Matching Income version)",
+                         "today":  "shows \"Sponsor Matching Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:788"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_title_matching",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Level income table is titled \"Matching Income\"",
+                         "today":  "On for 1074 - off for others",
+                         "where":  "StatementDailyPB.aspx:791"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_title_matching_text",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table title (Matching Income version)",
+                         "today":  "shows \"Matching Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:794"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_title_default",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table title (normal)",
+                         "today":  "shows \"Level Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:800"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_business_column",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Level income table shows Business in the second column (instead of Level)",
+                         "today":  "On for 1075 - off for others",
+                         "where":  "StatementDailyPB.aspx:812, 870"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_col2_title_business",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table, second column name (Business version)",
+                         "today":  "shows \"Business\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:814"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_col2_title_level",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table, second column name (normal)",
+                         "today":  "shows \"Level\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:818"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_show_bonus_column",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the Matching Bonus column in the level income table",
+                         "today":  "Off for 1075 - on for others",
+                         "where":  "StatementDailyPB.aspx:822, 880"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_col3_name_upline",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Level income table, bonus column is named \"Upline Bonus\"",
+                         "today":  "On for 1023 - off for others",
+                         "where":  "StatementDailyPB.aspx:826"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_col3_title_upline",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table, bonus column name (Upline Bonus version)",
+                         "today":  "shows \"Upline Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:829"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_col3_name_business",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Level income table, bonus column is named \"Business\"",
+                         "today":  "On for 1090 - off for others",
+                         "where":  "StatementDailyPB.aspx:832"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_col3_title_business",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table, bonus column name (Business version)",
+                         "today":  "shows \"Business\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:835"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_col3_title_default",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table, bonus column name (normal)",
+                         "today":  "shows \"Matching Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:841"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_lastcol_income",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Level income table, last column is named \"Income\" (instead of \"Comm.\")",
+                         "today":  "On for 1090 - off for others",
+                         "where":  "StatementDailyPB.aspx:851"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_lastcol_title_income",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table, last column name (Income version)",
+                         "today":  "shows \"Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:853"
+                     },
+                     {
+                         "key":  "statementdailypb.levelincome_lastcol_title_comm",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Level income table, last column name (normal)",
+                         "today":  "shows \"Comm.\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:857"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_title_direct_sponsor",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Downline income table is titled \"Direct Sponsor Income\"",
+                         "today":  "On for 1090, 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx:906"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_title_direct_sponsor_text",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Downline income table title (Direct Sponsor Income version)",
+                         "today":  "shows \"Direct Sponsor Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:910"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_title_reward",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Downline income table is titled \"Reward Bonus\"",
+                         "today":  "On for 1074 - off for others",
+                         "where":  "StatementDailyPB.aspx:913"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_title_reward_text",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Downline income table title (Reward Bonus version)",
+                         "today":  "shows \"Reward Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:916"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_title_default",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Downline income table title (normal)",
+                         "today":  "shows \"Downline Income Detail\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:922"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_show_level_column",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the Level column in the downline income table",
+                         "today":  "Off for 1090, 1091, 1095, 1097, 1100 - on for others",
+                         "where":  "StatementDailyPB.aspx:934, 1010"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_name_instead_of_level",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Downline income table shows Member Name instead of Level in that column",
+                         "today":  "On for 1090, 1091, 1095, 1097, 1100 - off for others (today those companies hide the column, so it has no visible effect unless the column is switched on)",
+                         "where":  "StatementDailyPB.aspx:943, 1019"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_col2_title_name",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Downline income table, second column name (Member Name version)",
+                         "today":  "shows \"Member Name\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:950"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_col2_title_level",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Downline income table, second column name (normal)",
+                         "today":  "shows \"Level\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:956"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_business_column",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Downline income table shows Business (instead of Downline Bonus) in the amount column",
+                         "today":  "On for 1090, 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx:965, 1041"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_col3_title_business",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Downline income table, amount column name (Business version)",
+                         "today":  "shows \"Business\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:969"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_col3_title_bonus",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Downline income table, amount column name (normal)",
+                         "today":  "shows \"Downline Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:975"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_lastcol_income",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Downline income table, last column is named \"Income\" (instead of \"Comm.\")",
+                         "today":  "On for 1090, 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx:985"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_lastcol_title_income",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Downline income table, last column name (Income version)",
+                         "today":  "shows \"Income\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:989"
+                     },
+                     {
+                         "key":  "statementdailypb.downline_lastcol_title_comm",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "label",
+                         "label":  "Downline income table, last column name (normal)",
+                         "today":  "shows \"Comm.\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementDailyPB.aspx:995"
+                     },
+                     {
+                         "key":  "statementdailypb.hide_total_boxes",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Hide the separate Total Earnings and Total Deductions boxes on the daily statement",
+                         "today":  "On for 1090, 1091, 1095, 1097, 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:67"
+                     },
+                     {
+                         "key":  "statementdailypb.earnings_layout_full",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings shown as fixed lines - full set incl. Reward, Royalty, Leadership Dev. (instead of a plain list)",
+                         "today":  "On for 1090 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:85"
+                     },
+                     {
+                         "key":  "statementdailypb.net_pay_from_earnings",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Net Payable is taken from the 5th earnings line (inside the full / no-sponsor-matching layouts)",
+                         "today":  "On for 1090, 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:98, 113, 191"
+                     },
+                     {
+                         "key":  "statementdailypb.earnings_layout_no_sponsor_matching",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings shown as fixed lines - without Sponsor Matching, royalty from line 10",
+                         "today":  "On for 1091 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:101"
+                     },
+                     {
+                         "key":  "statementdailypb.earnings_layout_self_income",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings shown as fixed lines - with Self Repurchase Income",
+                         "today":  "On for 1095, 1097, 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:116"
+                     },
+                     {
+                         "key":  "statementdailypb.earnings_layout_three_lines",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Earnings shown as fixed lines - only the first three lines",
+                         "today":  "On for 1074 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:130"
+                     },
+                     {
+                         "key":  "statementdailypb.deductions_fixed_layout",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Deductions shown as fixed lines (TDS, Admin Charge, Repurchase, Total) instead of a plain list",
+                         "today":  "On for 1090, 1091, 1095, 1097, 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:149"
+                     },
+                     {
+                         "key":  "statementdailypb.total_earnings_from_earnings_row",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Total Earnings box is taken from the 4th earnings line (instead of the totals result)",
+                         "today":  "On for 1074 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:179"
+                     },
+                     {
+                         "key":  "statementdailypb.net_pay_from_fifth_earning",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Net Payable is taken from the 5th earnings line (three-line layout)",
+                         "today":  "On for 1074 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:195"
+                     },
+                     {
+                         "key":  "statementdailypb.net_pay_calculated",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Net Payable is calculated on the page (earnings lines 1-5 minus TDS, Admin and Repurchase)",
+                         "today":  "On for 1095, 1097, 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:199"
+                     },
+                     {
+                         "key":  "statementdailypb.show_level_income",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the level income table (from the 7th result)",
+                         "today":  "On for 1009, 1023 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:252"
+                     },
+                     {
+                         "key":  "statementdailypb.show_downline_income",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the downline income table (from the 7th result)",
+                         "today":  "On for 1090, 1091, 1095, 1097, 1100 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:260"
+                     },
+                     {
+                         "key":  "statementdailypb.show_level_income_matching",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the level income table filled from the 9th result",
+                         "today":  "On for 1090 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:271"
+                     },
+                     {
+                         "key":  "statementdailypb.show_downline_income_upline",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the downline income table filled from the 8th result",
+                         "today":  "On for 1023 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:278"
+                     },
+                     {
+                         "key":  "statementdailypb.show_mentorship",
+                         "panel":  "member",
+                         "page":  "StatementDailyPB.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the mentorship bonus table",
+                         "today":  "On for 1030 - off for others",
+                         "where":  "StatementDailyPB.aspx.cs:285"
+                     },
+                     {
+                         "key":  "statementweekly.leg_names_group_ab",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "switch",
+                         "label":  "Business Details columns are called Group A / Group B",
+                         "today":  "On for 1111, 1113 - off for others (GitHub merge 2026-11-18: also set for 1115)",
+                         "where":  "StatementWeekly.aspx:615, 638"
+                     },
+                     {
+                         "key":  "statementweekly.leg1_group_a",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Business Details, first column name (Group A version)",
+                         "today":  "shows \"Group A\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:618"
+                     },
+                     {
+                         "key":  "statementweekly.leg_names_isp_bsp",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "switch",
+                         "label":  "Business Details columns are called ISP / BSP",
+                         "today":  "On for 1112 - off for others",
+                         "where":  "StatementWeekly.aspx:621, 644"
+                     },
+                     {
+                         "key":  "statementweekly.leg1_isp",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Business Details, first column name (ISP version)",
+                         "today":  "shows \"ISP\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:624"
+                     },
+                     {
+                         "key":  "statementweekly.leg1_power_group",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Business Details, first column name (normal)",
+                         "today":  "shows \"Power Group\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:629"
+                     },
+                     {
+                         "key":  "statementweekly.leg2_group_b",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Business Details, second column name (Group B version)",
+                         "today":  "shows \"Group B\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:641"
+                     },
+                     {
+                         "key":  "statementweekly.leg2_bsp",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Business Details, second column name (BSP version)",
+                         "today":  "shows \"BSP\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:647"
+                     },
+                     {
+                         "key":  "statementweekly.leg2_weaker_group",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Business Details, second column name (normal)",
+                         "today":  "shows \"Weaker Group\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:652"
+                     },
+                     {
+                         "key":  "statementweekly.bonus_layout_referral_tpb",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "switch",
+                         "label":  "Weekly statement bonus tables: Team Performance + Referral + Team bonus grids (and matching headings)",
+                         "today":  "On for 1113 - off for others",
+                         "where":  "StatementWeekly.aspx:804, 836; StatementWeekly.aspx.cs:214"
+                     },
+                     {
+                         "key":  "statementweekly.bonus2_title_referral_tpb",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Second-column bonus table heading (1113 version)",
+                         "today":  "shows \"Team Performance Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:807"
+                     },
+                     {
+                         "key":  "statementweekly.bonus_layout_direct_sponsor_tpb",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "switch",
+                         "label":  "Weekly statement bonus tables: Direct + Sponsor Team Performance grids (and matching headings)",
+                         "today":  "On for 1111 - off for others (GitHub merge 2026-11-18: also set for 1115)",
+                         "where":  "StatementWeekly.aspx:810, 842; StatementWeekly.aspx.cs:168"
+                     },
+                     {
+                         "key":  "statementweekly.bonus2_title_direct_sponsor_tpb",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Second-column bonus table heading (1111 version)",
+                         "today":  "shows \"Sponsor Team Performance Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:813"
+                     },
+                     {
+                         "key":  "statementweekly.bonus_layout_direct_sponsor",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "switch",
+                         "label":  "Weekly statement bonus tables: Direct Sponsor + Direct Sponsor Matching grids (and matching headings)",
+                         "today":  "On for 1112 - off for others",
+                         "where":  "StatementWeekly.aspx:816, 848; StatementWeekly.aspx.cs:198"
+                     },
+                     {
+                         "key":  "statementweekly.bonus2_title_direct_sponsor",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Second-column bonus table heading (1112 version)",
+                         "today":  "shows \"Direct Sponsor Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:819"
+                     },
+                     {
+                         "key":  "statementweekly.bonus2_title_default",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Second-column bonus table heading (normal)",
+                         "today":  "shows \"Sponsor Matching Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:825"
+                     },
+                     {
+                         "key":  "statementweekly.bonus3_title_referral_tpb",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Sponsor income table heading (1113 version)",
+                         "today":  "shows \"Referral Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:839"
+                     },
+                     {
+                         "key":  "statementweekly.bonus3_title_direct_sponsor_tpb",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Sponsor income table heading (1111 version)",
+                         "today":  "shows \"Direct Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:845"
+                     },
+                     {
+                         "key":  "statementweekly.bonus3_title_direct_sponsor",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Sponsor income table heading (1112 version)",
+                         "today":  "shows \"Direct Sponsor Matching Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:851"
+                     },
+                     {
+                         "key":  "statementweekly.bonus3_title_default",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "label",
+                         "label":  "Sponsor income table heading (normal)",
+                         "today":  "shows \"Sponsor Matching Bonus\" for all companies (the switch decides which companies see this text)",
+                         "where":  "StatementWeekly.aspx:856"
+                     },
+                     {
+                         "key":  "statementweekly.tolerate_missing_summary",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "switch",
+                         "label":  "Show 0 / blank instead of failing when the payout period or totals are missing",
+                         "today":  "On for 1111, 1112 - off for others (GitHub merge 2026-11-18: also set for 1115)",
+                         "where":  "StatementWeekly.aspx.cs:77, 103"
+                     },
+                     {
+                         "key":  "statementweekly.show_net_income_rows",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the Gross Previous / Net Closing / Net Income rows on the weekly statement",
+                         "today":  "On for 1007 - off for others",
+                         "where":  "StatementWeekly.aspx.cs:129"
+                     },
+                     {
+                         "key":  "statementweekly.matched_bv_per_leg",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "switch",
+                         "label":  "Show matched business separately for each leg (instead of one matched figure for both)",
+                         "today":  "On for 1111, 1112, 1113 - off for others (GitHub merge 2026-11-18: also set for 1115)",
+                         "where":  "StatementWeekly.aspx.cs:153"
+                     },
+                     {
+                         "key":  "statementweekly.show_direct_tpb_panel",
+                         "panel":  "member",
+                         "page":  "StatementWeekly.aspx",
+                         "kind":  "switch",
+                         "label":  "Show the Direct / Sponsor TPB panel (hides the sponsor income box)",
+                         "today":  "On for 1111 - off for others (GitHub merge 2026-11-18: also set for 1115)",
+                         "where":  "StatementWeekly.aspx.cs:184"
+                     },
+                     {
+                         "key":  "dailybinaryincome.weekly_heading",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "switch",
+                         "label":  "Payout detail page is headed \"Weekly\" instead of \"Daily\"",
+                         "today":  "On for 1110, 1113 - off for others",
+                         "where":  "DailyBinaryIncome.aspx:25"
+                     },
+                     {
+                         "key":  "dailybinaryincome.heading_weekly",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "label",
+                         "label":  "Payout detail heading (weekly version)",
+                         "today":  "shows \"Weekly Payout Detail\" for all companies (the switch decides which companies see this text)",
+                         "where":  "DailyBinaryIncome.aspx:27"
+                     },
+                     {
+                         "key":  "dailybinaryincome.heading_daily",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "label",
+                         "label":  "Payout detail heading (daily version)",
+                         "today":  "shows \"Daily Payout Detail\" for all companies (the switch decides which companies see this text) (GitHub merge 2026-11-18: also set for 1112)",
+                         "where":  "DailyBinaryIncome.aspx:31"
+                     },
+                     {
+                         "key":  "dailybinaryincome.layout_makeandgro",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "switch",
+                         "label":  "Payout detail uses table layout 4 (DivMakeAndGro)",
+                         "today":  "On for 1102 - off for others",
+                         "where":  "DailyBinaryIncome.aspx.cs:63, 212"
+                     },
+                     {
+                         "key":  "dailybinaryincome.layout_hemalikha",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "switch",
+                         "label":  "Payout detail uses table layout 2 (DivHemalikha)",
+                         "today":  "On for 1106 - off for others",
+                         "where":  "DailyBinaryIncome.aspx.cs:77, 226"
+                     },
+                     {
+                         "key":  "dailybinaryincome.layout_ev",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "switch",
+                         "label":  "Payout detail uses table layout 1 (divev)",
+                         "today":  "On for 1107 - off for others",
+                         "where":  "DailyBinaryIncome.aspx.cs:92, 241"
+                     },
+                     {
+                         "key":  "dailybinaryincome.layout_dv9",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "switch",
+                         "label":  "Payout detail uses table layout 3 (Dv9)",
+                         "today":  "On for 1108 - off for others",
+                         "where":  "DailyBinaryIncome.aspx.cs:107, 257"
+                     },
+                     {
+                         "key":  "dailybinaryincome.layout_greenavani",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "switch",
+                         "label":  "Payout detail uses table layout 6 (DivGreenAvani)",
+                         "today":  "On for 1109 - off for others",
+                         "where":  "DailyBinaryIncome.aspx.cs:121, 271"
+                     },
+                     {
+                         "key":  "dailybinaryincome.layout_mavitri",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "switch",
+                         "label":  "Payout detail uses table layout 5 (DivMavitri)",
+                         "today":  "On for 1110 - off for others",
+                         "where":  "DailyBinaryIncome.aspx.cs:135, 285"
+                     },
+                     {
+                         "key":  "dailybinaryincome.layout_vevida",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "switch",
+                         "label":  "Payout detail uses table layout 7 (DivVevida)",
+                         "today":  "On for 1111 - off for others (GitHub merge 2026-11-18: also set for 1115)",
+                         "where":  "DailyBinaryIncome.aspx.cs:149, 299"
+                     },
+                     {
+                         "key":  "dailybinaryincome.layout_pul",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "switch",
+                         "label":  "Payout detail uses table layout Pul (DivPul)",
+                         "today":  "On for 1112 - off for others",
+                         "where":  "DailyBinaryIncome.aspx.cs:163, 313"
+                     },
+                     {
+                         "key":  "dailybinaryincome.layout_zavinta",
+                         "panel":  "member",
+                         "page":  "DailyBinaryIncome.aspx",
+                         "kind":  "switch",
+                         "label":  "Payout detail uses table layout 8 (DivZavinta)",
+                         "today":  "On for 1113 - off for others",
+                         "where":  "DailyBinaryIncome.aspx.cs:177, 327"
+                     }
+                 ],
+    "skipped":  [
+                    {
+                        "where":  "StatementDailyPB.aspx.cs:48, 305",
+                        "reason":  "picks the database connection (MlmSelectDatabase + CompID)"
+                    },
+                    {
+                        "where":  "StatementDailyPB.aspx.cs:367-404 (GetCompID)",
+                        "reason":  "looks up which company this is (sets Session CompID from URL / web.config) - not a company condition"
+                    },
+                    {
+                        "where":  "StatementWeekly.aspx.cs:60, 319",
+                        "reason":  "picks the database connection (MlmDatabase + CompID)"
+                    },
+                    {
+                        "where":  "StatementWeekly.aspx.cs:251-288 (GetCompID)",
+                        "reason":  "looks up which company this is (sets Session CompID from URL / web.config) - not a company condition"
+                    },
+                    {
+                        "where":  "StatementWeekly.aspx:631, 654, 717",
+                        "reason":  "commented-out code"
+                    },
+                    {
+                        "where":  "DailyBinaryIncome.aspx.cs:59",
+                        "reason":  "picks the database connection (MlmSelectDatabase + CompID)"
+                    }
+                ]
+}

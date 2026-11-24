@@ -1,0 +1,15 @@
+{
+  "settings": [
+    { "key": "admin.reports.column_pv", "panel": "admin", "page": "All reports & lists", "kind": "switch", "label": "Reports & lists: show PV columns (any column whose heading has PV or the company's own name for PV, e.g. 'PV', 'Left PV', 'Total PV')", "today": "On (shown) for every company", "where": "MasteMain.master.vb -> App_Code/clsUnitColumns.vb" },
+    { "key": "admin.reports.column_bv", "panel": "admin", "page": "All reports & lists", "kind": "switch", "label": "Reports & lists: show BV columns (any column whose heading has BV or the company's own name for BV, e.g. 'BV', 'Matching BV', 'Package BV')", "today": "On (shown) for every company", "where": "MasteMain.master.vb -> App_Code/clsUnitColumns.vb" },
+    { "key": "admin.reports.column_sp", "panel": "admin", "page": "All reports & lists", "kind": "switch", "label": "Reports & lists: show SP columns (any column whose heading has SP or the company's own name for SP, e.g. 'SP', 'SP Capping')", "today": "On (shown) for every company", "where": "MasteMain.master.vb -> App_Code/clsUnitColumns.vb" },
+
+    { "key": "member.reports.column_pv", "panel": "member", "page": "All reports & lists", "kind": "switch", "label": "Reports & lists: show PV columns (any column whose heading has PV or the company's own name for PV)", "today": "On (shown) for every company", "where": "SitePage.master.cs -> App_Code/UnitColumns.cs" },
+    { "key": "member.reports.column_bv", "panel": "member", "page": "All reports & lists", "kind": "switch", "label": "Reports & lists: show BV columns (any column whose heading has BV or the company's own name for BV)", "today": "On (shown) for every company", "where": "SitePage.master.cs -> App_Code/UnitColumns.cs" },
+    { "key": "member.reports.column_sp", "panel": "member", "page": "All reports & lists", "kind": "switch", "label": "Reports & lists: show SP columns (any column whose heading has SP or the company's own name for SP)", "today": "On (shown) for every company", "where": "SitePage.master.cs -> App_Code/UnitColumns.cs" }
+  ],
+  "skipped": [
+    { "where": "Admin pages without MasteMain.master (~117) and the 8 asp:DataGrid pages", "reason": "not covered by the master-page hook" },
+    { "where": "Excel/PDF exports built straight from a DataTable (not from the grid)", "reason": "the export does not go through the grid, so the column is still in the file" }
+  ]
+}

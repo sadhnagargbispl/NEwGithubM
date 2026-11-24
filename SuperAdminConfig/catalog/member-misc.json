@@ -1,0 +1,60 @@
+{
+  "settings": [
+    { "key": "kyc.check_kyc_option_open", "panel": "member", "page": "KYC.aspx", "kind": "switch", "label": "KYC page: check the 'KYC option open' setting first; if it is off the member sees 'Kyc option is temporarily off' and cannot open or submit KYC", "today": "On for 1007 - off for others", "where": "kyc.aspx.cs:42, 933" },
+    { "key": "kyc.require_active_id", "panel": "member", "page": "KYC.aspx", "kind": "switch", "label": "KYC page: only members with an active ID can open the KYC page", "today": "On for 1101 - off for others", "where": "kyc.aspx.cs:56" },
+    { "key": "kyc.show_account_type", "panel": "member", "page": "KYC.aspx", "kind": "switch", "label": "KYC page: show the bank Account Type box", "today": "On for 1101, 1102, 1105, 1106, 1107, 1108, 1110 - off for others", "where": "kyc.aspx.cs:70" },
+    { "key": "kyc.pan_unique_check", "panel": "member", "page": "KYC.aspx", "kind": "switch", "label": "KYC page: block a PAN that is already used by another ID", "today": "On for 1077, 1091 - off for others", "where": "kyc.aspx.cs:680" },
+    { "key": "kyc.pan_unique_check_cashless", "panel": "member", "page": "KYC.aspx", "kind": "switch", "label": "KYC page: block a PAN that is already used by another ID (cashless check)", "today": "On for 1074 - off for others", "where": "kyc.aspx.cs:698" },
+    { "key": "kyc.aadhaar_unique_check", "panel": "member", "page": "KYC.aspx", "kind": "switch", "label": "KYC page: block an Aadhaar number already used by another ID", "today": "On for 1091 - off for others", "where": "kyc.aspx.cs:718" },
+    { "key": "kyc.log_account_type_change", "panel": "member", "page": "KYC.aspx", "kind": "switch", "label": "KYC page: record an Account Type change in the member's change history", "today": "On for 1100, 1102, 1105-1110, 1112 - off for others", "where": "kyc.aspx.cs:1282" },
+    { "key": "kyc.save_area_village", "panel": "member", "page": "KYC.aspx", "kind": "switch", "label": "KYC page: save the Area / Village (adds a new village when 'OTHERS' is chosen)", "today": "On for all except 1100, 1101, 1102, 1105-1110, 1112", "where": "kyc.aspx.cs:1310" },
+    { "key": "kyc.reset_kyc_part_flags", "panel": "member", "page": "KYC.aspx", "kind": "switch", "label": "KYC page: on save, send address/PAN/bank back for fresh approval (IsAddress/IsPan/IsBank reset). Needs those columns in that company's database", "today": "On for 1102, 1105-1110, 1112 - off for others", "where": "kyc.aspx.cs:1374" },
+
+    { "key": "walletrequest.member_min_request_amount", "panel": "member", "page": "walletrequest.aspx", "kind": "switch", "label": "Wallet request: work out the member's minimum request amount (8000 for flagged members, else 1)", "today": "On for 1049 - off for others", "where": "walletrequest.aspx.cs:80" },
+    { "key": "walletrequest.company_payment_info", "panel": "member", "page": "walletrequest.aspx", "kind": "switch", "label": "Wallet request: show the company's UPI QR code / bank details panel for the chosen payment mode. Needs the CompanyPaymentInfo table", "today": "On for 1108, 1110 - off for others", "where": "walletrequest.aspx.cs:319; walletrequest.aspx:444" },
+    { "key": "walletrequest.cashless_paymode_fields", "panel": "member", "page": "walletrequest.aspx", "kind": "switch", "label": "Wallet request: cashless layout - fields and notes change by payment mode (incl. the 'Go to Id activation...' note)", "today": "On for 1074 - off for others", "where": "walletrequest.aspx.cs:357; walletrequest.aspx:416" },
+    { "key": "walletrequest.email_member_on_request", "panel": "member", "page": "walletrequest.aspx", "kind": "switch", "label": "Wallet request: e-mail the member after a wallet request is submitted", "today": "On for all except 1066, 1068-1070, 1072-1075, 1082, 1090-1093, 1095, 1097, 1100, 1101, 1103, 1108-1113", "where": "walletrequest.aspx.cs:970" },
+    { "key": "walletrequest.duplicate_txn_check_product_orders", "panel": "member", "page": "walletrequest.aspx", "kind": "switch", "label": "Wallet request: also block a transaction no. already used in a product order", "today": "On for 1091 - off for others", "where": "walletrequest.aspx.cs:1034" },
+
+    { "key": "rptwithdrawls.show_tds_net_columns", "panel": "member", "page": "Rptwithdrawls.aspx", "kind": "switch", "label": "Withdrawal report: show TDS and net Withdraw columns (and call the amount 'Request Amount')", "today": "On for 1109 - off for others", "where": "Rptwithdrawls.aspx.cs:43; Rptwithdrawls.aspx:85, 89" },
+
+    { "key": "productrequestdetail.show_package_name", "panel": "member", "page": "ProductRequestDetail.aspx", "kind": "switch", "label": "Product requests: show the Package Name column", "today": "On for all except 1109", "where": "ProductRequestDetail.aspx:42, 65" },
+    { "key": "productrequestdetail.show_order_type", "panel": "member", "page": "ProductRequestDetail.aspx", "kind": "switch", "label": "Product requests: show the Order Type column", "today": "On for all except 1109", "where": "ProductRequestDetail.aspx:47, 71" },
+    { "key": "productrequestdetail.show_invoice", "panel": "member", "page": "ProductRequestDetail.aspx", "kind": "switch", "label": "Product requests: show the Invoice column / button", "today": "On for 1105, 1108, 1109 - off for others", "where": "ProductRequestDetail.aspx:52, 75" },
+
+    { "key": "invoice.hide_company_address", "panel": "member", "page": "Invoice.aspx", "kind": "switch", "label": "Invoice: hide the company address block", "today": "On for 1109 - off for others", "where": "Invoice.aspx.cs:165" },
+    { "key": "claiminvoice.show_company_address", "panel": "member", "page": "ClaimInvoice.aspx", "kind": "switch", "label": "Claim invoice: show the company address block", "today": "On for all except 1109", "where": "ClaimInvoice.aspx.cs:163" },
+
+    { "key": "idactivationpostal.courier_address_heading", "panel": "member", "page": "IdactivationPostal.aspx", "kind": "switch", "label": "ID activation (postal): call the address block 'Courier Address' instead of 'Postal Address'", "today": "On for 1111 - off for others (GitHub merge 2026-11-18: also set for 1115)", "where": "IdactivationPostal.aspx:78" },
+    { "key": "idactivationpostal.short_choose_label", "panel": "member", "page": "IdactivationPostal.aspx", "kind": "switch", "label": "ID activation (postal): show the package drop-down caption as just 'Choose' (instead of 'Choose Package')", "today": "On for 1078, 1093 - off for others", "where": "IdactivationPostal.aspx:133" },
+    { "key": "idactivationpostal.show_gold_fields", "panel": "member", "page": "IdactivationPostal.aspx", "kind": "switch", "label": "ID activation (postal): include the Gold Product Code and Address fields", "today": "On for 1059 - off for others", "where": "IdactivationPostal.aspx:165" },
+    { "key": "idactivationpostal.lookup_active_with_kit", "panel": "member", "page": "IdactivationPostal.aspx", "kind": "switch", "label": "ID activation (postal): member lookup accepts already-active IDs (top-up/upgrade) and loads their current package and top-up level", "today": "On for 1088, 1089, 1092, 1097, 1100, 1103 - off for others", "where": "IdactivationPostal.aspx.cs:140" },
+    { "key": "idactivationpostal.lookup_active_with_email", "panel": "member", "page": "IdactivationPostal.aspx", "kind": "switch", "label": "ID activation (postal): member lookup accepts already-active IDs (top-up/upgrade) and loads their email", "today": "On for 1108, 1111 - off for others", "where": "IdactivationPostal.aspx.cs:152" },
+
+    { "key": "ntimerewardwellach.alt_reward_grid", "panel": "member", "page": "NTimeRewardWellAch.aspx", "kind": "switch", "label": "Reward achievement: show pending rewards in the alternate table layout", "today": "On for 1108 - off for others", "where": "NTimeRewardWellAch.aspx.cs:63, 110, 129, 191, 210" },
+    { "key": "ntimerewardwellach.rp_column_headings", "panel": "member", "page": "NTimeRewardWellAch.aspx", "kind": "switch", "label": "Reward achievement: pair table columns are 'Left RP / Right RP' instead of 'Left PV / Right PV'", "today": "On for 1108 - off for others", "where": "NTimeRewardWellAch.aspx.cs:276" },
+    { "key": "ntimerewarddv9.alt_reward_grid", "panel": "member", "page": "NTimeRewardDv9.aspx", "kind": "switch", "label": "Bonanza reward: show pending rewards in the alternate table layout", "today": "On for 1108 - off for others", "where": "NTimeRewardDv9.aspx.cs:63, 118, 142, 211, 230" },
+    { "key": "ntimerewarddv9.rp_column_headings", "panel": "member", "page": "NTimeRewardDv9.aspx", "kind": "switch", "label": "Bonanza reward: pair table columns are 'Left RP / Right RP' instead of 'Left PV / Right PV'", "today": "On for 1108 - off for others", "where": "NTimeRewardDv9.aspx.cs:296" },
+
+    { "key": "complain.complaint_with_proof_upload", "panel": "member", "page": "Complain.aspx", "kind": "switch", "label": "Complaint: heading 'Complaint' with a proof image upload (upload required on submit)", "today": "On for 1055 - off for others", "where": "Complain.aspx.cs:46, 342" },
+    { "key": "complain.grievance_form", "panel": "member", "page": "Complain.aspx", "kind": "switch", "label": "Complaint: page is called 'Grievance' (no proof upload). Only used when the switch above is off", "today": "On for 1056 - off for others", "where": "Complain.aspx.cs:57" },
+    { "key": "complain.distributor_id_label", "panel": "member", "page": "Complain.aspx", "kind": "switch", "label": "Complaint: ID box is called 'Distributor ID' instead of 'Direct Seller ID'", "today": "On for 1091 - off for others", "where": "Complain.aspx:54" },
+    { "key": "complainsolution.grievance_headings", "panel": "member", "page": "ComplainSolution.aspx", "kind": "switch", "label": "Complaint replies: table headings say 'Grievance Id / Date / Grievance' instead of 'Complaint ...'", "today": "On for 1056 - off for others", "where": "ComplainSolution.aspx:49, 60, 71" },
+
+    { "key": "tr26_closing_detail.weekly_payout_heading", "panel": "member", "page": "tr26_closing_detail.aspx", "kind": "switch", "label": "Closing detail: heading is 'Weekly Payout Detail' instead of 'MATCHING INCOME DETAILS'", "today": "On for 1110, 1113 - off for others", "where": "tr26_closing_detail.aspx:25" }
+  ],
+  "skipped": [
+    { "where": "walletrequestdetail.aspx.cs:75", "reason": "picks the data source: runs Sp_GetWalletDetail instead of the WalletReq query" },
+    { "where": "AllWalletReport.aspx.cs:61", "reason": "picks the data source: runs FillWallettype procedure instead of the VoucherType query" },
+    { "where": "ViewLevelIncome.aspx.cs:63", "reason": "picks the data source: runs SP_LevelIncomeReportmavitr instead of SP_LevelIncomeReport" },
+    { "where": "ComplainSolution.aspx.cs:28", "reason": "SQL text: chooses the join used to read replies (latest reply only) - part of the query" },
+    { "where": "Invoice.aspx.cs:318, 343", "reason": "picks the data source for invoice items (fixed item list for 1105, repurchincome amount for 1109)" },
+    { "where": "IdactivationPostal.aspx.cs:438, 676", "reason": "picks the activation flow / data source: writes cart and orders into the shopping-site database (sqlConn) and passes the member's password to SaveAddressDetail - data source + credentials" },
+    { "where": "walletrequest.aspx.cs:964", "reason": "commented-out code" },
+    { "where": "Rptwithdrawls.aspx.cs:117", "reason": "commented-out code" },
+    { "where": "Invoice.aspx.cs:173, 181", "reason": "commented-out code" },
+    { "where": "Complain.aspx.cs:429", "reason": "commented-out code" },
+    { "where": "kyc.aspx.cs:969", "reason": "commented-out code" },
+    { "where": "IndexT.aspx, IndexGreen.aspx, RefIndex.aspx, WUCMenu.ascx", "reason": "no remaining conditions: all already converted or listed as skipped in member-kyc-profile.json" }
+  ]
+}

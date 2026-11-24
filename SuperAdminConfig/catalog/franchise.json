@@ -1,0 +1,21 @@
+{
+  "settings": [
+    { "key": "franchise.dispatchorder1.show_paymode", "panel": "franchise", "page": "Views/Transaction/DispatchOrder1.cshtml", "kind": "switch", "label": "Dispatch orders (old screen DispatchOrder1): show the Pay Mode column in the order grid", "today": "Off by default; seeded On for 1006 (note: no menu/action opens this screen today)", "where": "DispatchOrder1.cshtml:1313" },
+
+    { "key": "franchise.productmaster1030.show_product_for", "panel": "franchise", "page": "Views/Product/ProductMaster1030.cshtml", "kind": "switch", "label": "Product master (old screen ProductMaster1030): show the 'Product For' drop-down", "today": "On by default; seeded Off for 1055 (note: no menu/action opens this screen today)", "where": "ProductMaster1030.cshtml:1035" },
+
+    { "key": "franchise.invoiceprint_copy.gstin_shows_aadhar", "panel": "franchise", "page": "Views/Transaction/InvoicePrint - Copy.cshtml", "kind": "switch", "label": "Invoice print (old copy): in the 'GSTIN/UIN' box of Billed To / Shipped To, print the customer's Aadhaar number instead of the GST number", "today": "Off by default; seeded On for 1007 (note: backup copy of the invoice print, not opened today)", "where": "InvoicePrint - Copy.cshtml:308, 343" },
+    { "key": "franchise.invoiceprint_copy.vadic_terms", "panel": "franchise", "page": "Views/Transaction/InvoicePrint - Copy.cshtml", "kind": "switch", "label": "Invoice print (old copy): print the Vadic terms & conditions (vadicindia.com link, Ambala jurisdiction) instead of the standard terms (18% interest, company-city jurisdiction)", "today": "Off by default; seeded On for 1007 (note: backup copy of the invoice print, not opened today)", "where": "InvoicePrint - Copy.cshtml:843" },
+    { "key": "franchise.invoiceprint_copy.return_within_30_days", "panel": "franchise", "page": "Views/Transaction/InvoicePrint - Copy.cshtml", "kind": "switch", "label": "Invoice print (old copy): first term reads 'not taken back after 30 days of invoice and if seal is broken' instead of 'Goods once sold will not be taken back' (only inside the Vadic terms block)", "today": "Off by default; seeded On for 1038 (in practice never shown: it sits inside the Vadic-terms block)", "where": "InvoicePrint - Copy.cshtml:846" },
+
+    { "key": "franchise.distributorbillvadic.show_bill_type_message", "panel": "franchise", "page": "Views/Transaction/DistributorBillVadic.cshtml", "kind": "switch", "label": "Distributor bill (old Vadic screen): after the ID is entered, show 'Your Id is Active. Repurchase Bill will be created.' / 'Your Id is InActive. Activation Bill will be created.'", "today": "Off by default; seeded On for 1006, 1007 (note: no controller action renders this view today)", "where": "DistributorBillVadic.cshtml:1383" },
+    { "key": "franchise.distributorbillggs.show_bill_type_message", "panel": "franchise", "page": "Views/Transaction/DistributorBillGGS.cshtml", "kind": "switch", "label": "Distributor bill (old GGS screen): after the ID is entered, show 'Your Id is Active. Repurchase Bill will be created.' / 'Your Id is InActive. Activation Bill will be created.'", "today": "Off by default; seeded On for 1006, 1007, 1020 (note: no controller action renders this view today)", "where": "DistributorBillGGS.cshtml:1422" }
+  ],
+  "skipped": [
+    { "where": "Views/Product/ProductMaster1030.cshtml, Views/Transaction/DispatchOrder1.cshtml, InvoicePrint - Copy.cshtml, DistributorBillVadic.cshtml, DistributorBillGGS.cshtml", "reason": "still dead in the 2026-11-19 GitHub code: not in the .csproj and no controller action renders them; their company checks were converted anyway (2026-11-20) so no company ID stays in the code" },
+    { "where": "Views/Transaction/InvoicePrintNew.cshtml (company checks)", "reason": "commented-out code (inside @* *@ / //)" },
+    { "where": "InventoryManagement.API/GenConnection.cs:30-36", "reason": "picks the company / database connection (and the file is not compiled into any project)" },
+    { "where": "InventoryManagement.API/Controllers/TransactionAPIController - Copy (2).cs", "reason": "backup copy, not compiled into the project" },
+    { "where": "ProductAPIController.cs:508-922, TransactionAPIController.cs:7346, 16475, 16740", "reason": "not a company id: starting numbers 1000 / 1001 for product codes, journal / request numbers" }
+  ]
+}

@@ -1,0 +1,11 @@
+{ "settings": [
+    { "key": "groupdirects.total_in_update_panel", "panel": "member", "page": "GroupDirects.aspx", "kind": "switch", "label": "Group directs: show the 'Total Records' count inside the list's update panel (Label2/Label3) instead of the top line (Label1/lbltotal)", "today": "On for 1113 - off for others", "where": "Groupdirects.aspx.cs:255" },
+    { "key": "indextb.directs_view_link", "panel": "member", "page": "Indextb.aspx", "kind": "switch", "label": "Dashboard 'My Direct Members' card shows a [View] link to the full My Directs page", "today": "On for 1113 - off for others", "where": "IndexTB.aspx:1905" }
+  ],
+  "skipped": [
+    { "where": "ProcessAPIWithK.aspx.cs:3972-3992, 5901", "reason": "company ids only inside commented-out code" }
+  ],
+  "secrets": [
+    { "where": "ShoppingRedirect.aspx.cs:41 (GreenAvaniLogin)", "what": "greenavanisolutions.com inter-login token - left in code (already listed in member-cid-api.json; switch shoppingredirect.greenavani_login)" }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "settings": [
+    { "key": "changepass.mail_password_changed", "panel": "member", "page": "ChangePass.aspx", "kind": "switch", "label": "After a member changes the login password, e-mail a 'password changed' notice (Make & Growth wording) to the member's e-mail", "today": "On for 1102 - off for others", "where": "ChangePass.aspx.cs:156" },
+    { "key": "shoppingredirect.shop_login_url", "panel": "member", "page": "ShoppingRedirect.aspx", "kind": "text", "label": "Shopping button: address of the shopping site's direct-login page (the member's login is added as ?refs=...&info=...)", "today": "1106 https://myhemalika.com/Account/Directlogin, 1112 http://pulastyaglobals.in/Account/Directlogin, 1113 http://zyvintra.com/Account/Directlogin - others https://makeandgrowth.com/Account/Directlogin", "where": "ShoppingRedirect.aspx.cs:25" },
+    { "key": "shoppingredirect.greenavani_login", "panel": "member", "page": "ShoppingRedirect.aspx", "kind": "switch", "label": "Shopping button: log the member straight into greenavanisolutions.com (auto-posted login form) instead of the shopping site above", "today": "On for 1109 - off for others", "where": "ShoppingRedirect.aspx.cs:26" },
+    { "key": "appapi.forgot_password_mail", "panel": "member", "page": "AppApi.aspx", "kind": "switch", "label": "Mobile app forgot password: e-mail the login details to the member's e-mail", "today": "On for 1102 - off for others", "where": "AppApi.aspx.cs:3231" },
+    { "key": "appapi.mail_ssl", "panel": "member", "page": "AppApi.aspx", "kind": "switch", "label": "Mobile app e-mails (company mail account): send over SSL", "today": "Off for 1074 - on for others", "where": "AppApi.aspx.cs:3435" },
+    { "key": "appapi.dailybinary_columns_grid", "panel": "member", "page": "AppApi.aspx", "kind": "text", "label": "Mobile app daily binary income: which column set (headings) to show - gridview1 (Matching/Referral Incentive, Matrix, EV station), gridview2 (Wholesale/Royalty Club), gridview3 (Matching/Level/Sponsor Matching Bonus), gridview4 (Matching/Referral/Spot/CPC Booster), gridview5 (Team Sales Volume/Direct Sales...), gridview6 (Matching/Direct/Level Bonus), gridview7 (Team Performance/Direct/Team Turnover Royalty), gridview8 (Self Purchase/Team Performance/Referral/Royalty Bonus); empty = standard columns. Replaces appapi.dailybinary_column_set (company-number values), which is no longer read", "today": "1102 gridview4, 1106 gridview2, 1107 gridview1, 1108 gridview3, 1109 gridview6, 1110 gridview5, 1111 gridview7, 1113 gridview8 - others the standard set", "where": "AppApi.aspx.cs:7679" },
+    { "key": "appapi.join_require_sponsor_leg_password", "panel": "member", "page": "AppApi.aspx", "kind": "switch", "label": "Mobile app joining: sponsor ID, leg, country and password + confirm password are required (checked only when the 'For Type with PAN required' rule is off)", "today": "On for 1112 - off for others", "where": "AppApi.aspx.cs:9170" },
+    { "key": "appapi.join_password_from_form", "panel": "member", "page": "AppApi.aspx", "kind": "switch", "label": "Mobile app joining: the new member's password is the one typed on the form (otherwise a random 5-digit password)", "today": "On for 1112 - off for others", "where": "AppApi.aspx.cs:9364" },
+    { "key": "appapi.join_welcome_mail", "panel": "member", "page": "AppApi.aspx", "kind": "switch", "label": "Mobile app joining: e-mail a welcome letter with ID and password to the new member", "today": "On for 1102 - off for others", "where": "AppApi.aspx.cs:9514" },
+    { "key": "appapi.join_welcome_mail_makeandgrowth_text", "panel": "member", "page": "AppApi.aspx", "kind": "switch", "label": "Mobile app joining welcome e-mail: use the Make & Growth letter text (otherwise the general letter with the company name)", "today": "On for 1102 - off for others", "where": "AppApi.aspx.cs:9574" }
+  ],
+  "reusedKeysSeeded": [
+    "directlogin.load_business_registration_fields (1108)",
+    "appapi.referral_link_makeandgrowth (1102), appapi.referral_link_alphaaevplug (1107), appapi.referral_link_pulastyaglobals (1112), appapi.referral_link_zyvintra (1113), appapi.referral_link_expertholistic (1114)",
+    "appapi.kyc_save_reset_flags_isform (1102, 1106; both places now share the key - same code in both branches)",
+    "appapi.kyc_company_kyc, appapi.kyc_requires_active_id, appapi.kyc_track_account_type_change, appapi.kyc_save_area_village ('0' for the 12 listed), appapi.kyc_reset_is_flags, appapi.welcome_hide_join_activate_shop",
+    "all appapi.dlp_* keys (downline purchase)",
+    "appapi.join_save_for_type (1102, 1113, 1114; both places insert the same row)"
+  ],
+  "skipped": [
+    { "where": "AppApi.aspx.cs:6138-6158", "reason": "commented-out code (old referral-link chain) - not touched" },
+    { "where": "AppApi.aspx.cs:9082", "reason": "commented-out code - not touched" },
+    { "where": "AppApi.aspx.cs:394, Directlogin.aspx.cs:325", "reason": "not a company id: default sponsor ID PR10000001" },
+    { "where": "AppApi.aspx.cs:4185", "reason": "not a company id: first request number 1001" },
+    { "where": "AppApi.aspx.cs:4996, 5074", "reason": "not a company id: session number 100000" },
+    { "where": "AppApi.aspx.cs:7360", "reason": "not a company id: page line numbers 293-1091 in a comment" },
+    { "where": "AppApi.aspx.cs:8994, 9370", "reason": "not a company id: random password range 10000-99999" }
+  ],
+  "secrets": [
+    { "where": "ShoppingRedirect.aspx.cs:40", "what": "greenavanisolutions.com inter-login token (used when shoppingredirect.greenavani_login is on, 1109) - left in code" }
+  ]
+}

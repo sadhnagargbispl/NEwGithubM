@@ -1,0 +1,13 @@
+{ "settings": [
+    { "key": "indextb.team_rp_rows_2", "panel": "member", "page": "Indextb.aspx", "kind": "switch", "label": "Team summary shows Today's/Total RP rows with left/right values (BV rows hidden) - GitHub 2026-11 version of indextb.team_rp_rows (1112 no longer included)", "today": "On for 1114 - off for others", "where": "Indextb.aspx.cs:475, 560" },
+    { "key": "indextb.dashboard_income_from_netincome", "panel": "member", "page": "Indextb.aspx", "kind": "switch", "label": "Dashboard total income procedure sums NetIncome of published sessions (M_SessnMaster) instead of all dashboard payout columns", "today": "On for 1113 - off for others", "where": "Indextb.aspx.cs:1103" },
+    { "key": "wucmenu.promo_wallet_fixed_formno_only", "panel": "member", "page": "WUCMenu.ascx", "kind": "switch", "label": "Side menu shows 'Promo Wallet Transfer' only to members listed in MstFixedFormNo (hidden for everyone else)", "today": "On for 1111 - off for others", "where": "WUCMenu.ascx.cs:275, 402" },
+    { "key": "viewrefincome.mlevel_referral_proc", "panel": "member", "page": "ViewRefIncome.aspx", "kind": "switch", "label": "Referral income detail uses SP_RefferalIncomeMlevel for page type REFE (instead of SP_RefferalLevelIncome for REFLEVEL)", "today": "On for 1112 - off for others", "where": "ViewRefIncome.aspx.cs:65" },
+    { "key": "rptwithdrawls.show_remark_column", "panel": "member", "page": "Rptwithdrawls.aspx", "kind": "switch", "label": "Withdrawal report shows the Remark column", "today": "On for 1111, 1115 - off for others", "where": "Rptwithdrawls.aspx.cs:56, 97" }
+  ],
+  "skipped": [
+    { "where": "walletrequest.aspx.cs:865", "reason": "not a company id: '1001' is the first request number (ISNULL(Max(ReqNo)+1,'1001'))" },
+    { "where": "WUCMenu.ascx.cs, Fundwithdraw.aspx.cs, IdActivationAmountPackage.aspx.cs, kyc.aspx.cs, KYCUpdate.aspx.cs, ProcessAPIWithK.aspx.cs, Rptwithdrawls.aspx.cs:147, walletrequest.aspx.cs:915", "reason": "company ids only inside commented-out code" }
+  ],
+  "secrets": []
+}

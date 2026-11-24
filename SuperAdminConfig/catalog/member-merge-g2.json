@@ -1,0 +1,20 @@
+{ "settings": [
+    { "key": "downline.show_package_mrp_column", "panel": "member", "page": "Downline.aspx", "kind": "switch", "label": "Show the Package MRP (package amount) column in the downline lists - GitHub 2026-11 split it from downline.show_package_columns (which still controls Package Name)", "today": "On for everyone except 1112, 1114", "where": "Downline.aspx:201, 250, 330, 379" },
+    { "key": "downline.export_sp_layout", "panel": "member", "page": "Downline.aspx", "kind": "switch", "label": "Downline Excel export uses 7 columns ending with SP (no package amount column)", "today": "On for 1112 - off for others", "where": "Downline.aspx.cs:301" },
+    { "key": "groupdirects.show_position_col", "panel": "member", "page": "GroupDirects.aspx", "kind": "switch", "label": "Show the Position column in the group directs list - GitHub 2026-11 version of groupdirects.show_position (moved from 1057 to 1112)", "today": "On for 1112 - off for others", "where": "GroupDirects.aspx:325, 410" },
+    { "key": "statementweekly.carry_rows_no_unit", "panel": "member", "page": "StatementWeekly.aspx", "kind": "switch", "label": "Weekly statement business rows read Pre Carry / New / Matched / Carry without the value name (instead of B/F / New / Matched / C/F + value name)", "today": "On for 1112 - off for others", "where": "StatementWeekly.aspx:767, 797, 825, 853" },
+    { "key": "statementweekly.bus_title", "panel": "member", "page": "StatementWeekly.aspx", "kind": "label", "label": "Weekly statement title of the monthly business bonus box", "today": "1112: \"Franchise Bonus\" - others \"Monthly Business\"", "where": "StatementWeekly.aspx:907" },
+    { "key": "statementweekly.royalty_title", "panel": "member", "page": "StatementWeekly.aspx", "kind": "label", "label": "Weekly statement title of the royalty bonus box", "today": "1112: \"Franchise Sponsor Bonus\" - others \"Royalty Bonus\"", "where": "StatementWeekly.aspx:917" },
+    { "key": "allwalletreport.wallet_type_member_sp", "panel": "member", "page": "AllWalletReport.aspx", "kind": "switch", "label": "All wallet report: wallet type list comes from Sp_GetWalletType_New for the member (instead of the standard VoucherType list). Replaces allwalletreport.wallet_type_from_sp (FillWallettype, 1077), which GitHub removed", "today": "On for 1111, 1115 - off for others", "where": "AllWalletReport.aspx.cs:61" },
+    { "key": "ntimerewarddv9.pair_unit", "panel": "member", "page": "NTimeRewardDv9.aspx", "kind": "text", "label": "Reward pair table: value code shown in the Left/Right column headings (when the RP headings switch is off)", "today": "1102: SV, 1107 and 1113: BV - others PV", "where": "NTimeRewardDv9.aspx.cs:73" },
+    { "key": "ntimerewarddv9.flow_bonanza", "panel": "member", "page": "NTimeRewardDv9.aspx", "kind": "switch", "label": "Reward page reads achievers from MstBonanzaAchievers and pending rewards from MstRewards", "today": "On for 1108 - off for others", "where": "NTimeRewardDv9.aspx.cs:160, 183, 259, 315" },
+    { "key": "ntimerewarddv9.flow_rewardmaster_pair", "panel": "member", "page": "NTimeRewardDv9.aspx", "kind": "switch", "label": "Reward page reads achievers from MstrewardAchievers and pending rewards from m_rewardmaster (amount = pair)", "today": "On for 1107 - off for others", "where": "NTimeRewardDv9.aspx.cs:166, 193, 268, 329" },
+    { "key": "ntimerewarddv9.flow_rewardmaster_newpair", "panel": "member", "page": "NTimeRewardDv9.aspx", "kind": "switch", "label": "Reward page reads achievers from MstrewardAchievers and pending rewards from m_rewardmaster (amount = NewPair)", "today": "On for 1102 - off for others", "where": "NTimeRewardDv9.aspx.cs:166, 202, 277, 343" }
+  ],
+  "skipped": [
+    { "where": "StatementWeekly.aspx:734, 757, 876", "reason": "company ids only inside commented-out markup (<%-- --%>)" },
+    { "where": "Mydirects.aspx:484", "reason": "not a company check: control ID lblTotalAmount1112" },
+    { "where": "BankKYC.aspx.cs:1039-1988", "reason": "company-free; second copy of the class is commented out" }
+  ],
+  "secrets": []
+}

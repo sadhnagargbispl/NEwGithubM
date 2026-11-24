@@ -1,0 +1,30 @@
+{
+  "settings": [
+    { "key": "web.layout.franchise_login_url", "panel": "web", "page": "Views/Shared/_Layout.cshtml", "kind": "text", "label": "Website top menu: address the 'Franchise Login' link opens (new tab)", "today": "https://shop.pulastyaglobals.in/ for every deployment (seeded for 1112)", "where": "Views/Shared/_Layout.cshtml:212" },
+    { "key": "web.layout.franchise_login", "panel": "web", "page": "Views/Shared/_Layout.cshtml", "kind": "label", "label": "Website top menu: text of the 'Franchise Login' link", "today": "\"Franchise Login\" for everyone (no seed)", "where": "Views/Shared/_Layout.cshtml:212" },
+    { "key": "web.r_login.whatsapp_log_compid", "panel": "web", "page": "Repository/R_Login.cs", "kind": "number", "label": "Advanced: company number written into the WhatsApp request log (Tbl_ApiRequest_ResponseWhatsapp.CompID). Should normally be this company's own ID", "today": "1007 for every deployment (copied from another company's code; seeded for 1112 to keep today's value)", "where": "Repository/R_Login.cs:597 (SaveWhatsappRequest)" }
+  ],
+  "skipped": [
+    { "where": "Controllers/HomeController.cs:44", "reason": "reads appSetting \"CompanyId\" into a field that is never used; left as is (PanelConfig also accepts \"CompanyId\" as a fallback for \"CompID\")" },
+    { "where": "Controllers/CheckOutController.cs:482, Views/CheckOut/CheckOut.cshtml:630", "reason": "not a company id: kit ids 1001-1004 in comments" },
+    { "where": "Controllers/ViewCartController.cs:194-366", "reason": "not a company id: BV / weight amount 1000 in commented-out code" },
+    { "where": "Models/BLLDBOperations.cs:419", "reason": "column mapping uCompId (data column, no literal)" },
+    { "where": "Controllers/HomeController.cs:65", "reason": "not a company id: banner category \"6\"" },
+    { "where": "namespace Aarogyabhumi / class Aarogyaidactivation / Sp_SaveAarogyaidactivationLog / AssemblyInfo", "reason": "code identifiers (old project name), not shown to anyone" },
+    { "where": "Views/Account/ResiterUserdetail.cshtml, Views/CheckOrder/CheckOrder.cshtml (dv9-* / DARJUV9)", "reason": "CSS class names and comments only; company name on screen comes from Session[\"CompName\"] (m_companymaster)" },
+    { "where": "Controllers/CheckOutController.cs:741, Repository/R_Login.cs:542", "reason": "commented-out code" },
+    { "where": "Properties/PublishProfiles/*.pubxml(.user), Shopinv.csproj.user", "reason": "developer publish folders, not used by the running site" },
+    { "where": "SiteDoc/*.sql, demo/*.asp", "reason": "one-off SQL scripts / static demo pages, not part of the running site" },
+    { "where": "Views/** CDN links (code.jquery.com, cdnjs, unpkg, jsdelivr, datatables, fonts.googleapis, wa.me, facebook/twitter/t.me share URLs)", "reason": "library / share URLs, not company values" },
+    { "where": "Web.config appSettings (ImageUrl, ApiUrl, CPanelUrl, DocumentBaseUrl, StateListApiUrl, GvPortalUrl, StorePortalUrl, BrandPortalUrl, InvoiceUrl, DefaultProductImageUrl, ProductImageUrl, Cashfree*Url, Doc*Url, WhatsappApiUrl, ...)", "reason": "already per-deployment config (set in Web.config at deploy time, not in code) - listed in D:\\Sadhna\\SaWork\\panels3\\Web_Pulastyaglobals-new-company.md" }
+  ],
+  "secrets": [
+    { "where": "Controllers/CheckOutController.cs:1037-1047 and 1195-1203", "what": "Cashfree x-client-id / x-client-secret (production and sandbox) hardcoded in code - left in code; should move to Web.config appSettings per company" },
+    { "where": "Controllers/CheckOutController.cs:484, 1078; Controllers/ManualKamController.cs:65", "what": "token for the cPanel CheckLogin 'addbv' API hardcoded in the URL - left in code; must match the company's cPanel" },
+    { "where": "Controllers/CheckOutController.cs:473, 735, 741", "what": "same token in commented-out lines" },
+    { "where": "Web.config appSettings Sendbox_xapikey(_test), Sendbox_xapisecret(_test)", "what": "sandbox.co.in KYC API key/secret (live + test)" },
+    { "where": "Web.config appSettings HubbleAppSecret, HubbleSecret (+ commented dev values)", "what": "Hubble gift-voucher SDK secrets" },
+    { "where": "Web.config appSettings MistralApiKey", "what": "Mistral AI API key (voice assistant)" },
+    { "where": "Web.config connectionStrings sqlConn, sqlMLMConn (+ commented Darju / makengrowth ones)", "what": "SQL logins/passwords" }
+  ]
+}

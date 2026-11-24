@@ -1,0 +1,37 @@
+{
+  "settings": [
+    { "key": "idactivationpostal.activate_via_web_order", "panel": "member", "page": "IdactivationPostal.aspx", "kind": "switch",
+      "label": "Postal ID activation: save the postal address, raise a purchase request, add the package product to the cart and create a web order, then activate the ID",
+      "today": "On for 1108 - off for others (others: the Activate button does nothing unless 'activate_direct' is on)", "where": "IdactivationPostal.aspx.cs:437" },
+    { "key": "idactivationpostal.activate_direct", "panel": "member", "page": "IdactivationPostal.aspx", "kind": "switch",
+      "label": "Postal ID activation: save the postal address, raise a purchase request and activate the ID directly (no web order)",
+      "today": "On for 1111 - off for others (checked only when 'activate_via_web_order' is off) (GitHub merge 2026-11-18: also set for 1115)", "where": "IdactivationPostal.aspx.cs:675" },
+    { "key": "newjoiningfreeucgroup.mobile_email_unique_early", "panel": "member", "page": "NewJoiningfreeucGroup.aspx", "kind": "switch",
+      "label": "Group joining: a mobile number and an e-mail ID can each be used by only one member (checked early, before the e-mail and PAN checks)",
+      "today": "On for 1088 - off for others", "where": "NewJoiningfreeucGroup.aspx.cs:2643" },
+    { "key": "newjoiningfreeupwithotp.father_name_star", "panel": "member", "page": "NewJoiningFreeUpWithOtp.aspx", "kind": "switch",
+      "label": "Joining with OTP: show the red * next to Father/Husband's name when the page opens (Off = the * text is blank)",
+      "today": "Off for 1111 - on for others (GitHub merge 2026-11-18: also set for 1115)", "where": "NewJoiningFreeUpWithOtp.aspx.cs:128" },
+    { "key": "newjoiningfreeupwithotp.father_name_star_shown", "panel": "member", "page": "NewJoiningFreeUpWithOtp.aspx", "kind": "switch",
+      "label": "Joining with OTP: keep the Father/Husband's name * marker on the page (Off = the marker is removed)",
+      "today": "Off for 1112 - on for others", "where": "NewJoiningFreeUpWithOtp.aspx.cs:161" },
+    { "key": "newjoiningfreeupwithotp.father_name_star_individual", "panel": "member", "page": "NewJoiningFreeUpWithOtp.aspx", "kind": "switch",
+      "label": "Joining with OTP: when 'Individual' is chosen in the browser, the Father/Husband's name label gets a red *",
+      "today": "Off for 1111, 1114 - on for others", "where": "NewJoiningFreeUpWithOtp.aspx:922" },
+    { "key": "newjoiningfreeupwithotp.skip_active_join_recheck", "panel": "member", "page": "NewJoiningFreeUpWithOtp.aspx", "kind": "switch",
+      "label": "Joining with OTP: skip the second 'sponsor not allowed to join (contact admin)' check on save (the first check still runs for everyone)",
+      "today": "On for 1112 - off for others", "where": "NewJoiningFreeUpWithOtp.aspx.cs:2711" },
+    { "key": "newjoiningfreeupwithotp.pan_unique_general", "panel": "member", "page": "NewJoiningFreeUpWithOtp.aspx", "kind": "switch",
+      "label": "Joining with OTP: a PAN number can be used by only one member (general check on save)",
+      "today": "Off for 1112 - on for others", "where": "NewJoiningFreeUpWithOtp.aspx.cs:3045" }
+  ],
+  "skipped": [
+    { "where": "Mydirects.aspx.cs:23, 51, 296-299, 307, 316, 323, 349, 372-406; Mydirects.aspx:408-487", "reason": "not a company check: '1112' is part of control / method / ViewState names (pnlDirectReferral1112, FillDirect1112, PageSize1112 ...); the screen itself is switched by mydirects.direct_referral_screen" },
+    { "where": "Mydirects.aspx.cs:337", "reason": "stored procedure name 'sp_GetDirectReferral_1112' - a database object name used only when mydirects.direct_referral_screen is on; renaming needs a database change" },
+    { "where": "NewJoiningfreeucGroup.aspx.cs:2887, 2894, 2913", "reason": "not a company id: count limit 1000 (and key name mobile_email_limit_1000)" },
+    { "where": "KYCUpdate.aspx.cs:161, 713, 733, 753, 773; KYCUpdate.aspx:670, 677", "reason": "not a company id: 1024 (bytes to KB/MB)" },
+    { "where": "Idactivation.aspx:135; IdActivationWithAmount.aspx:101; IdActivationAmountPackage.aspx:130; Mydirects.aspx:407; Downline.aspx:195, 324", "reason": "server-side comment <%-- --%> only" },
+    { "where": "DownlinePurchase.aspx.cs:832-2507 (many), Mydirects.aspx.cs:487-585, KYCUpdate.aspx.cs:65-68 and other // lines", "reason": "commented-out code / comments - not touched" }
+  ],
+  "secrets": []
+}

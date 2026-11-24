@@ -1,0 +1,7 @@
+﻿{
+  "settings": [
+    { "key": "indext.referral_link_from_api", "panel": "member", "page": "IndexT.aspx", "kind": "switch",
+      "label": "IndexT dashboard: fetch the referral link from the cpanel.myhemalika.com API (sends the member's ID and password to that server)",
+      "today": "On for 1106 - off for others (owner's decision 2026-11-18; GitHub code runs it for every company)", "where": "IndexT.aspx.cs Page_Load" }
+  ]
+}

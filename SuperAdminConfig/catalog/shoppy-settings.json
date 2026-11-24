@@ -1,0 +1,34 @@
+{
+  "settings": [
+    { "key": "shoppy.transactionrepository.member_api_url", "panel": "shoppy", "page": "VitaFlow.Infrastructure/Repository/TransactionRepository.cs", "kind": "text", "label": "Member API address the shop calls to check a member's login/password, read FP and voucher balances, and post PV/BV after a bill (INSERTPVBV)", "today": "https://zoewellness.co.in/Api/api.ashx (written in code; the PV/BV post used the same address in lower case .../api/api.ashx) - seeded for 1112", "where": "TransactionRepository.cs GetMemeberBalance, GetMemeberPasswordDetail, GetMemeberDetail(Username, Password), bill save (INSERTPVBV + Sp_InsertApiRequestResponse log)" },
+    { "key": "shoppy.checkout.default_product_image", "panel": "shoppy", "page": "Views/Cart/Checkout.cshtml", "kind": "text", "label": "Checkout: picture shown when a product has no image", "today": "https://zadmin.zoewellness.co.in/images/DefaultProduct.jpg - seeded for 1112", "where": "Checkout.cshtml:931" },
+    { "key": "shoppy.productlist.default_product_image", "panel": "shoppy", "page": "Views/Product/Productlist.cshtml", "kind": "text", "label": "Product list: picture shown when a product has no image", "today": "https://franchise.expertholistic.com/images/DefaultProduct.jpg - seeded for 1112", "where": "Productlist.cshtml:12" },
+    { "key": "shoppy.appsettings.shopping_url", "panel": "shoppy", "page": "appsettings.json (ShoppingUrl)", "kind": "text", "label": "Shop address used for wallet-request images and bill links", "today": "appsettings ShoppingUrl (https://shop.pulastyaglobals.in/WalletReqsImages/) - seeded for 1112", "where": "TransactionController.cs (WalletRequest upload, bills); default = appsettings value" },
+    { "key": "shoppy.appsettings.franchise_url", "panel": "shoppy", "page": "appsettings.json (FranchiseUrl)", "kind": "text", "label": "Franchise site address (product images are loaded from <address>/ProductImages/, pending-order links)", "today": "appsettings FranchiseUrl (https://franchise.pulastyaglobals.in/) - seeded for 1112", "where": "TransactionController.cs:127, Productlist.cshtml:10; default = appsettings value" },
+    { "key": "shoppy.appsettings.cv_caption", "panel": "shoppy", "page": "appsettings.json (CVCaption)", "kind": "label", "label": "Word for C.V. on bills", "today": "C.V.", "where": "TransactionController.cs; default = appsettings value" },
+    { "key": "shoppy.appsettings.bv_caption", "panel": "shoppy", "page": "appsettings.json (BVCaption)", "kind": "label", "label": "Word for BV on bills", "today": "S.P.", "where": "TransactionController.cs; default = appsettings value" },
+    { "key": "shoppy.appsettings.pv_caption", "panel": "shoppy", "page": "appsettings.json (PVCaption)", "kind": "label", "label": "Word for PV on bills", "today": "P.V.", "where": "TransactionController.cs; default = appsettings value" },
+    { "key": "shoppy.appsettings.rp_caption", "panel": "shoppy", "page": "appsettings.json (RPCaption)", "kind": "label", "label": "Word for R.P. on bills", "today": "R.P.", "where": "TransactionController.cs; default = appsettings value" },
+    { "key": "shoppy.appsettings.customer_caption", "panel": "shoppy", "page": "appsettings.json (CustomerCaption)", "kind": "label", "label": "Word for a customer/member in reports", "today": "Consultant (PC)", "where": "ReportController.cs; default = appsettings value" },
+    { "key": "shoppy.appsettings.party_caption", "panel": "shoppy", "page": "appsettings.json (PartyCaption)", "kind": "label", "label": "Word for a party/outlet in bills and reports", "today": "Shoppe", "where": "ReportController.cs, TransactionController.cs; default = appsettings value" },
+    { "key": "shoppy.appsettings.repurchase_caption", "panel": "shoppy", "page": "appsettings.json (RepurchaseCaption)", "kind": "label", "label": "Title of a repurchase invoice", "today": "Repurchase Invoice", "where": "TransactionController.cs; default = appsettings value" },
+    { "key": "shoppy.appsettings.joining_caption", "panel": "shoppy", "page": "appsettings.json (JoiningCaption)", "kind": "label", "label": "Title of an activation/joining invoice", "today": "Activation Invoice", "where": "TransactionController.cs; default = appsettings value" },
+    { "key": "shoppy.appsettings.barcode_caption", "panel": "shoppy", "page": "appsettings.json (BarcodeCaption)", "kind": "label", "label": "Word for Barcode on bills", "today": "Barcode", "where": "TransactionController.cs; default = appsettings value" },
+    { "key": "shoppy.appsettings.shoppe_caption", "panel": "shoppy", "page": "appsettings.json (ShoppeCaption)", "kind": "label", "label": "Word for the shop (party caption on the stock report)", "today": "Shoppe", "where": "ReportController.cs:203; default = appsettings value" }
+  ],
+  "skipped": [
+    { "where": "whole Shoppy code", "reason": "no company-ID checks (CompID == ...) exist in the New Github Shoppy code" },
+    { "where": "Views (Login, Registration, Thankyou, _Layout, InvoicePrint, InvoicePrintPDF, PayoutStatement)", "reason": "company name/address/phone/mail/GST/logo already come from M_CompanyMaster via Services/CompanyInfoProvider.cs (upstream change)" },
+    { "where": "appsettings.json Database / INVDatabase / ConnectionStrings", "reason": "database names and logins are deploy-time configuration (one Shoppy per company), not Super Admin settings" },
+    { "where": "appsettings.json WRPartyCode / TransactionRepository.cs:2560 partycode = \"WR\"", "reason": "party code used in logic, not a company display value" },
+    { "where": "LoginRepository.cs:374 https://api.postalpincode.in", "reason": "public pincode service, not a company value" },
+    { "where": "TransactionRepository.cs:1054-1055, 3823, 3908, 3993, 4077, 4101; GstSaleRegister/SalesReport/StockTransactionReport/CustomerBill/PartyBill test strings", "reason": "commented-out code" },
+    { "where": "Registration.cshtml, Thankyou.cshtml colorlib favicon / login_files Cloudflare beacon; _Layout.cshtml codeigniter.spruko.com avatar pictures", "reason": "template/library leftovers (third-party theme), not company values" },
+    { "where": "Views/Report/WalletRequestReport.cshtml:22", "reason": "only a comment mentions expertholistic.com; the code builds site-relative URLs" }
+  ],
+  "secrets": [
+    { "where": "VitaFlow.Infrastructure/Repository/TransactionRepository.cs:1010, 1032, 1074, 2555", "what": "member-API 'logkey' (another company's API key) - left in code, not copied into settings; should move to secure deploy config" },
+    { "where": "VitaFlow.Presenation/appsettings.json ConnectionStrings LiveConn / LiveconnInv", "what": "SQL login password for the company databases - deploy config only" },
+    { "where": "VitaFlow.Presenation/Properties/PublishProfiles/*.pubxml(.user)", "what": "publish profiles from the repo (may hold deploy credentials) - not read/copied" }
+  ]
+}
