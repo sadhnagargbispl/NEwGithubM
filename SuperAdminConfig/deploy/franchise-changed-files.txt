@@ -1,5 +1,0 @@
-﻿InventoryManagement\Common\PanelConfig.cs   (NEW)
-InventoryManagement\InventoryManagement.csproj
-InventoryManagement\Views\Transaction\DispatchOrder1.cshtml
-InventoryManagement\Views\Product\ProductMaster1030.cshtml
-InventoryManagement\Views\Transaction\InvoicePrint - Copy.cshtml
