@@ -1,0 +1,146 @@
+@model SuperAdmin.Controllers.NewCompanyController.PageModel
+@{
+    ViewData["Title"] = "New company";
+    var f = Model.Form;
+    var plan = Model.Plan;
+    var src = Model.Sources.FirstOrDefault(s => s.Id == f.SourceId);
+}
+<div class="page-head">
+    <div>
+        <h1>New company</h1>
+        <p class="muted">Start a company from one that already runs. Its database is a copy of that company's database; Super Admin adds the rest so every panel finds it.</p>
+    </div>
+</div>
+
+<div class="card">
+    <ol class="card-pad stack small muted" style="margin:0; padding-left:34px">
+        <li><strong>Database:</strong> tick <em>Make the database copy for me</em> and Super Admin copies the source company's database under the new name - or make the copy yourself on the SQL server and leave it unticked.</li>
+        <li><strong>Fill the boxes</strong> and press <em>Check</em>. Nothing is saved yet - you see exactly what will be done.</li>
+        <li>Press <em>Add company</em>. Then fill its name, address and GST in Company details.</li>
+    </ol>
+</div>
+
+<form method="post" asp-antiforgery="true" action="/companies/new/check" class="card card-pad stack" style="margin-top:16px">
+    <div class="details-grid">
+        <label class="field wide">
+            <span>Copy from company</span>
+            <select name="SourceId" class="input" required>
+                <option value="">- choose -</option>
+                @foreach (var s in Model.Sources)
+                {
+                    <option value="@s.Id" selected="@(s.Id == f.SourceId)">@s.Id · @s.Name</option>
+                }
+            </select>
+            <span class="faint small">The company whose database you copied. Its settings in the master are copied too.</span>
+        </label>
+        <label class="field">
+            <span>New company ID</span>
+            <input name="NewId" class="input mono" value="@f.NewId" inputmode="numeric" pattern="[0-9]+" />
+            <span class="faint small">Next free number is filled in. The panels and settings use this ID.</span>
+        </label>
+        <label class="field">
+            <span>New database name</span>
+            <input name="NewDatabase" class="input mono" value="@f.NewDatabase" maxlength="128" required autocapitalize="off" spellcheck="false" />
+            <span class="faint small">A new name if Super Admin makes the copy; otherwise the copy you made, on the same server as the source company's database.</span>
+        </label>
+        <label class="field wide row" style="gap:8px; align-items:flex-start">
+            <input type="checkbox" name="MakeCopy" value="true" checked="@f.MakeCopy" />
+            <input type="hidden" name="MakeCopy" value="false" />
+            <span><strong>Make the database copy for me</strong> <span class="faint small">(full copy of the source company's database, including its members and business data)</span></span>
+        </label>
+        <label class="field">
+            <span>Company name</span>
+            <input name="Name" class="input" value="@f.Name" maxlength="200" required />
+        </label>
+        <label class="field">
+            <span>Website address</span>
+            <input name="Url" class="input mono" value="@f.Url" maxlength="300" required placeholder="e.g. dv9wellness.com" autocapitalize="off" spellcheck="false" />
+            <span class="faint small">The address the panels open on - written the same way as for other companies@(plan?.SourceUrl is { Length: > 0 } su ? $" (source: {su})" : "").</span>
+        </label>
+        <label class="field wide row" style="gap:8px; align-items:flex-start">
+            <input type="checkbox" name="CopyMenus" value="true" checked="@f.CopyMenus" />
+            <input type="hidden" name="CopyMenus" value="false" />
+            <span>Copy the Admin and Member menus from the source company <span class="faint small">(without menus the panels show an empty menu)</span></span>
+        </label>
+        <label class="field wide row" style="gap:8px; align-items:flex-start">
+            <input type="checkbox" name="CopySettings" value="true" checked="@f.CopySettings" />
+            <input type="hidden" name="CopySettings" value="false" />
+            <span>Copy the source company's Super Admin settings too <span class="faint small">(words, value names, forms, branding, panel settings - otherwise the new company starts from “All companies”)</span></span>
+        </label>
+    </div>
+    <div class="row"><button type="submit" class="btn @(plan?.Ok == true ? "ghost" : "")">Check</button></div>
+</form>
+
+@if (plan is not null)
+{
+    @if (!plan.Ok)
+    {
+        <div class="flash error" role="alert" style="margin-top:16px">
+            <strong>Not added - fix this first:</strong>
+            <ul style="margin:6px 0 0; padding-left:20px">
+                @foreach (var e in plan.Errors) { <li>@e</li> }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="card" style="margin-top:16px">
+            <div class="card-pad stack">
+                <h2 style="margin:0">This will be added to the master database</h2>
+                <p class="muted small" style="margin:0">
+                    Company <strong>@(plan.IdIsAuto ? "(ID given by the database)" : plan.NewId.ToString())</strong> · database <strong class="mono">@f.NewDatabase.Trim()</strong>
+                    · copied from @src.Id @src.Name (database <span class="mono">@plan.SourceDatabase</span>).
+                    It is saved only if the panels' own lookup then finds the new database.
+                </p>
+            </div>
+            <div class="table-wrap">
+                <table class="table">
+                    <thead><tr><th>Table</th><th>What it is</th><th class="num">Rows</th><th>Changed from the source</th></tr></thead>
+                    <tbody>
+                        @if (plan.Copy is { } dc)
+                        {
+                            <tr>
+                                <td class="mono small">database @f.NewDatabase.Trim()</td>
+                                <td class="small">New database - full copy of <span class="mono">@plan.SourceDatabase</span> (@dc.SizeMb.ToString("N0") MB)</td>
+                                <td class="num">-</td>
+                                <td class="small">
+                                    @foreach (var x in dc.Files) { <div>@x.Type file: <span class="mono">@x.NewPath</span></div> }
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var t in plan.Copies)
+                        {
+                            <tr>
+                                <td class="mono small">@t.Table</td>
+                                <td class="small">@t.Why</td>
+                                <td class="num">@t.Rows</td>
+                                <td class="small">
+                                    @if (t.Changes.Count == 0) { <span class="faint">company ID only</span> }
+                                    @foreach (var ch in t.Changes) { <div>@ch</div> }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (plan.Notes.Count > 0)
+            {
+                <ul class="card-pad small muted" style="margin:0; padding-left:34px">
+                    @foreach (var n in plan.Notes) { <li>@n</li> }
+                </ul>
+            }
+            <form method="post" asp-antiforgery="true" action="/companies/new/create" class="card-pad row">
+                <input type="hidden" name="SourceId" value="@f.SourceId" />
+                <input type="hidden" name="NewId" value="@f.NewId" />
+                <input type="hidden" name="Name" value="@f.Name" />
+                <input type="hidden" name="Url" value="@f.Url" />
+                <input type="hidden" name="NewDatabase" value="@f.NewDatabase" />
+                <input type="hidden" name="CopyMenus" value="@(f.CopyMenus ? "true" : "false")" />
+                <input type="hidden" name="CopySettings" value="@(f.CopySettings ? "true" : "false")" />
+                <input type="hidden" name="MakeCopy" value="@(f.MakeCopy ? "true" : "false")" />
+                <button type="submit" class="btn" onclick="this.disabled=true; this.textContent='Working… (copying can take minutes)'; this.form.submit();">@(plan.Copy is not null ? "Copy database and add company" : "Add company")</button>
+                <span class="faint small">Changed a box above? Press Check again first.</span>
+            </form>
+        </div>
+    }
+}

@@ -1,0 +1,868 @@
+﻿@model CompanyPageModel
+@using SuperAdmin.Data
+@inject SettingsCatalog SettingsCat
+@inject MenuStore MenuNames
+@{
+    // Panel settings: show the page's menu name ("Approve payment requests") instead of only its file.
+    var pageNames = Model.Tab == "panel" ? await MenuNames.PageNamesAsync(Model.SettingsPanel) : new Dictionary<string, string>();
+    // No menu name: make the file readable - "AddBVPoint.aspx" → "Add BV Point".
+    static string Readable(string page)
+    {
+        if (!page.EndsWith(".aspx", StringComparison.OrdinalIgnoreCase)) return page;
+        var s = page[..^5].Replace('_', ' ');
+        s = System.Text.RegularExpressions.Regex.Replace(s, "(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])", " ");
+        return s.Length > 0 ? char.ToUpperInvariant(s[0]) + s[1..] : page;
+    }
+    string PageTitle(string page) => pageNames.TryGetValue(page, out var n) ? n : Readable(page);
+    bool HasPageTitle(string page) => page.EndsWith(".aspx", StringComparison.OrdinalIgnoreCase);
+    var c = Model.Company;
+    ViewData["Title"] = c.Name ?? $"Company {c.Id}";
+    var canEdit = User.IsInRole(Roles.Owner) || User.IsInRole(Roles.Admin);
+    var isAll = c.Id == 0;
+    var sec = CurrentCompany.Sections.FirstOrDefault(s => s.Tab == Model.Tab);
+    var sectionName = sec.Name ?? (Model.Tab == "rules" ? "General rules (not used)" : Model.Tab);
+    // List pages where each row has its own Save button get the "how to" line.
+    var rowSaves = Model.Tab is "words" or "units" or "forms" or "menus" or "dashboard" or "panel" or "rules";
+    // Only safe values may reach the preview's style / src (an invalid entry shown back after an error must not).
+    static string? SafeColor(string? v) => v is not null && System.Text.RegularExpressions.Regex.IsMatch(v, "^#[0-9A-Fa-f]{6}$") ? v : null;
+    static string? SafeUrl(string? v) => v is not null && Uri.TryCreate(v, UriKind.Absolute, out var u) && (u.Scheme == "https" || u.Scheme == "http")
+                                         && v.IndexOfAny(new[] { '"', '\'', '<', '>', '(', ')', ' ' }) < 0 ? v : null;}
+@* Always say plainly WHICH company is being changed. *@
+<div class="editing-bar @(isAll ? "all" : "")" role="status">
+    <div>
+        @if (isAll)
+        {
+            <strong>⚠ Editing: ALL COMPANIES (default)</strong>
+            <div class="small">Changes here apply to every company that has not set its own value. To change one company only, choose it in “Company” on the left.</div>
+        }
+        else
+        {
+            <strong>Editing: @c.Name <span style="font-weight:400">(ID @c.Id)</span></strong>
+            <div class="small">Changes here apply to this company only. Empty = the panel stays as it is today.</div>
+        }
+    </div>
+    <span class="chip tech">Settings version @c.Version</span>
+</div>
+
+<div class="page-head" style="margin-bottom:12px">
+    <div>
+        <h1>@sectionName</h1>
+        @if (sec.Help is not null) { <p class="muted">@sec.Help</p> }
+    </div>
+</div>
+@if (rowSaves && canEdit)
+{
+    <ol class="howto" aria-label="How to change a setting">
+        <li><b>1</b> Find the row (use “Find on this page”)</li>
+        <li><b>2</b> Change the box or choice</li>
+        <li><b>3</b> Press <strong>Save</strong> on that same row</li>
+        <li class="faint">Panels show the change within about 30 seconds. “As today” / empty = no change.</li>
+    </ol>
+}
+
+<div class="card">
+    @{
+        // What the panels actually read today, so nothing here looks like it works when it does not.
+        var status = Model.Tab switch
+        {
+            "rules" => ("info", $"The panels do not use this page. To change withdrawal, KYC and similar rules, go to <a href=\"/company/{c.Id}/panel\">Panel settings</a> and search “withdraw” or “kyc”."),
+            "forms" => ("ok", "Works on: Member panel - the 3 joining pages and the profile page. <span class=\"faint\">Not yet on the Admin panel's registration and profile pages.</span>"),
+            "branding" => ("ok", "Works on: Member panel and Admin panel - logo, colours, browser icon, footer, copyright. <span class=\"faint\">Login picture and welcome line are not used by the panels yet.</span>"),
+            "words" or "units" => ("ok", "Works on: Member panel and Admin panel, wherever the word is shown on screen."),
+            "dashboard" => ("ok", "Works on: the member's home page after login <span class=\"tech\">(Indextb.aspx)</span>."),
+            "menus" => ("ok", "Works on: the panel's side menu. A change shows the next time a page is opened."),
+            "details" when !isAll => ("ok", "Works on: every panel - bills, invoices, mails and page titles. <span class=\"tech\">(M_CompanyMaster in the company's database)</span>"),
+            "websites" when !isAll => ("ok", "Works on: Member panel and Admin panel - they recognise the company from the website name they are opened on."),
+            "panel" => ("ok", "Works on: the page named above each group. “As today” = that page keeps working exactly as now."),
+            _ => ((string?)null, (string?)null),
+        };
+    }
+    @if (status.Item1 is not null)
+    {
+        <p class="flash @(status.Item1 == "ok" ? "ok" : "")" style="margin:12px 16px 0; @(status.Item1 == "info" ? "background:var(--info-bg);color:var(--info)" : "")">@Html.Raw(status.Item2)</p>
+    }
+
+    @switch (Model.Tab)
+    {
+        case "words":
+            <div class="list">
+                @foreach (var w in Catalog.Words)
+                {
+                    Model.Layer.Own.TryGetValue(w.Key, out var own);
+                    Model.Layer.Inherited.TryGetValue(w.Key, out var inh);
+                    <form method="post" asp-antiforgery="true" action="/company/@c.Id/words/save" class="setting">
+                        <input type="hidden" name="key" value="@w.Key" />
+                        <div>
+                            <div class="setting-title">
+                                <strong>@w.Today</strong>
+                                @if (own is not null) { <span class="chip brand">changed</span> }
+                                else if (inh is not null) { <span class="chip info">from All companies: @inh.Value</span> }
+                            </div>
+                            <div class="setting-meta">Today: @w.Today@(w.Note is null ? "" : $" · e.g. {w.Note}")<span class="tech"> · <span class="mono">@w.Key</span></span></div>
+                        </div>
+                        <label>
+                            <span class="sr-only">Word for @w.Today</span>
+                            <input name="text" class="input" value="@own?.Value" maxlength="500" placeholder="@(inh?.Value ?? w.Today)" disabled="@(!canEdit)" />
+                        </label>
+                        <div class="actions">
+                            @if (canEdit)
+                            {
+                                <button type="submit" class="btn sm">Save</button>
+                                @if (own is not null)
+                                {
+                                    <button type="submit" class="btn ghost sm" formaction="/company/@c.Id/words/reset" data-confirm-btn>Reset</button>
+                                }
+                            }
+                        </div>
+                    </form>
+                }
+            </div>
+            break;
+
+        case "units":
+            <div class="list">
+                @foreach (var u in Catalog.Units)
+                {
+                    Model.Layer.Own.TryGetValue(u.Code, out var own);
+                    Model.Layer.Inherited.TryGetValue(u.Code, out var inh);
+                    var cur = own ?? inh;
+                    <form method="post" asp-antiforgery="true" action="/company/@c.Id/units/save" class="setting">
+                        <input type="hidden" name="code" value="@u.Code" />
+                        <input type="hidden" name="sort" value="@(cur?.SortOrder ?? 0)" />
+                        <div>
+                            <div class="setting-title">
+                                <strong class="mono" style="font-size:14px">@u.Code</strong>
+                                @if (own is not null) { <span class="chip brand">changed</span> }
+                                else if (inh is not null) { <span class="chip info">from All companies: @inh.Value</span> }
+                                @if (cur is not null && !cur.IsEnabled) { <span class="chip">hidden</span> }
+                            </div>
+                            <div class="setting-meta">Today shown as “@u.Today”. The code stays the same in the database.</div>
+                        </div>
+                        <div class="row" style="flex-wrap:nowrap">
+                            <label style="flex:1">
+                                <span class="sr-only">Name for @u.Code</span>
+                                <input name="name" class="input" value="@own?.Value" maxlength="60" placeholder="@(inh?.Value ?? u.Today)" disabled="@(!canEdit)" />
+                            </label>
+                            <label class="row small muted" style="flex-wrap:nowrap; gap:4px">
+                                <input type="checkbox" name="enabled" value="true" checked="@(cur?.IsEnabled ?? true)" disabled="@(!canEdit)" /> Show
+                            </label>
+                        </div>
+                        <div class="actions">
+                            @if (canEdit)
+                            {
+                                <button type="submit" class="btn sm">Save</button>
+                                @if (own is not null)
+                                {
+                                    <button type="submit" class="btn ghost sm" formaction="/company/@c.Id/units/reset" data-confirm-btn>Reset</button>
+                                }
+                            }
+                        </div>
+                    </form>
+                }
+            </div>
+            break;
+
+        case "rules":
+            <div class="list">
+                @foreach (var g in Catalog.Rules.GroupBy(r => r.Group))
+                {
+                    <div class="group-head">@g.Key</div>
+                    @foreach (var r in g)
+                    {
+                        Model.Layer.Own.TryGetValue(r.Key, out var own);
+                        Model.Layer.Inherited.TryGetValue(r.Key, out var inh);
+                        var cur = own ?? inh;
+                        <form method="post" asp-antiforgery="true" action="/company/@c.Id/rules/save" class="setting">
+                            <input type="hidden" name="key" value="@r.Key" />
+                            <div>
+                                <div class="setting-title">
+                                    <strong>@r.Label</strong>
+                                    @if (own is not null) { <span class="chip brand">changed</span> }
+                                    else if (inh is not null) { <span class="chip info">from All companies</span> }
+                                </div>
+                                <div class="setting-meta">Today: @r.Today<span class="tech"> · <span class="mono">@r.Key</span></span></div>
+                            </div>
+                            @if (r.Kind == Catalog.RuleKind.Switch)
+                            {
+                                // Not set is NOT "Off": with no value the panel keeps today's behaviour.
+                                var state = cur is null ? "" : (cur.IsEnabled ? "on" : "off");
+                                <fieldset class="row" style="border:0; margin:0; padding:0" disabled="@(!canEdit)">
+                                    <legend class="sr-only">@r.Label</legend>
+                                    <div class="seg">
+                                        <label><input type="radio" name="state" value="on" checked="@(state == "on")" />On</label>
+                                        <label><input type="radio" name="state" value="off" checked="@(state == "off")" />Off</label>
+                                    </div>
+                                    @if (cur is null) { <span class="faint small">Not set (as today)</span> }
+                                </fieldset>
+                            }
+                            else
+                            {
+                                <label>
+                                    <span class="sr-only">@r.Label</span>
+                                    <input name="value" class="input" value="@own?.Value" inputmode="@(r.Kind == Catalog.RuleKind.Number ? "decimal" : "text")"
+                                           placeholder="@(inh?.Value ?? "as today")" disabled="@(!canEdit)" />
+                                </label>
+                            }
+                            <div class="actions">
+                                @if (canEdit)
+                                {
+                                    <button type="submit" class="btn sm">Save</button>
+                                    @if (own is not null)
+                                    {
+                                        <button type="submit" class="btn ghost sm" formaction="/company/@c.Id/rules/reset" data-confirm-btn>Reset</button>
+                                    }
+                                }
+                            </div>
+                        </form>
+                    }
+                }
+            </div>
+            break;
+
+        case "forms":
+            var form = Model.Form!;
+            <div class="card-pad row" style="justify-content:space-between; border-bottom:1px solid var(--line)">
+                <div class="row" role="tablist" aria-label="Form">
+                    @foreach (var f in Catalog.Forms)
+                    {
+                        <a class="btn sm @(f.Key == form.Key ? "" : "ghost")" href="/company/@c.Id/forms?form=@f.Key" aria-current="@(f.Key == form.Key ? "page" : null)">@f.Name</a>
+                    }
+                </div>
+                <span class="faint small">@form.Where · “As today” = the panel decides, exactly as now</span>
+            </div>
+            <div class="list">
+                @foreach (var g in form.Fields.GroupBy(x => x.Group))
+                {
+                    <div class="group-head">@g.Key</div>
+                    @foreach (var fld in g)
+                    {
+                        Model.Fields.Own.TryGetValue(fld.Key, out var own);
+                        Model.Fields.Inherited.TryGetValue(fld.Key, out var inh);
+                        var more = own is not null && (own.Placeholder ?? own.HelpText ?? own.Pattern) is not null || own?.MinLength is not null || own?.MaxLength is not null || own?.SortOrder is not null;
+                        <form method="post" asp-antiforgery="true" action="/company/@c.Id/forms/save" class="setting field-row">
+                            <input type="hidden" name="form" value="@form.Key" />
+                            <input type="hidden" name="field" value="@fld.Key" />
+                            <div>
+                                <div class="setting-title">
+                                    <strong>@(own?.LabelText ?? fld.Today)</strong>
+                                    @if (own is not null) { <span class="chip brand">changed</span> }
+                                    @* Values combine one by one: anything this company leaves "as today" comes from All companies. *@
+                                    @if (inh is not null) { <span class="chip info">All companies: @inh.Describe()</span> }
+                                    @if (!fld.CanHide) { <span class="chip" title="The form needs this field">always shown</span> }
+                                </div>
+                                <div class="setting-meta">
+                                    Today: “@fld.Today”, the panel's own rule@(fld.Note is null ? "" : $" · {fld.Note}")<span class="tech"> · <span class="mono">@fld.Key</span></span>
+                                    @if (own is not null) { <br /><span>Set: @own.Describe()</span> }
+                                </div>
+                            </div>
+                            <fieldset class="field-controls" disabled="@(!canEdit)">
+                                <legend class="sr-only">@fld.Today</legend>
+                                <label class="field">Show
+                                    <select name="show" class="input">
+                                        <option value="">As today</option>
+                                        <option value="show" selected="@(own?.IsVisible == true)">Show</option>
+                                        @if (fld.CanHide) { <option value="hide" selected="@(own?.IsVisible == false)">Hide</option> }
+                                    </select>
+                                </label>
+                                <label class="field">Required
+                                    <select name="required" class="input">
+                                        <option value="">As today</option>
+                                        <option value="yes" selected="@(own?.IsRequired == true)">Required</option>
+                                        <option value="no" selected="@(own?.IsRequired == false)">Optional</option>
+                                    </select>
+                                </label>
+                                @if (form.Key == "profile")
+                                {
+                                    <label class="field">Member can edit
+                                        <select name="readonly" class="input">
+                                            <option value="">As today</option>
+                                            <option value="no" selected="@(own?.IsReadOnly == false)">Editable</option>
+                                            <option value="yes" selected="@(own?.IsReadOnly == true)">Read-only</option>
+                                        </select>
+                                    </label>
+                                }
+                                <label class="field">Label
+                                    <input name="label" class="input" value="@own?.LabelText" maxlength="200" placeholder="@(inh?.LabelText ?? fld.Today)" />
+                                </label>
+                                <details class="more" open="@more">
+                                    <summary>More</summary>
+                                    <div class="more-grid">
+                                        <label class="field">Hint inside the box
+                                            <input name="placeholder" class="input" value="@own?.Placeholder" maxlength="200" />
+                                        </label>
+                                        <label class="field">Help text under the box
+                                            <input name="help" class="input" value="@own?.HelpText" maxlength="500" />
+                                        </label>
+                                        <label class="field">Min length
+                                            <input name="min" class="input" value="@own?.MinLength" inputmode="numeric" />
+                                        </label>
+                                        <label class="field">Max length
+                                            <input name="max" class="input" value="@own?.MaxLength" inputmode="numeric" />
+                                        </label>
+                                        <label class="field">Pattern (regular expression)
+                                            <input name="pattern" class="input mono" value="@own?.Pattern" maxlength="300" placeholder="e.g. ^[1-9][0-9]{5}$" />
+                                        </label>
+                                        <label class="field">Order on the form
+                                            <input name="order" class="input" value="@own?.SortOrder" inputmode="numeric" placeholder="as today" />
+                                        </label>
+                                    </div>
+                                </details>
+                            </fieldset>
+                            <div class="actions">
+                                @if (canEdit)
+                                {
+                                    <button type="submit" class="btn sm">Save</button>
+                                    @if (own is not null)
+                                    {
+                                        <button type="submit" class="btn ghost sm" formaction="/company/@c.Id/forms/reset" data-confirm-btn>Reset</button>
+                                    }
+                                }
+                            </div>
+                        </form>
+                    }
+                }
+            </div>
+            break;
+
+        case "websites":
+            var ws = Model.Websites;
+            if (isAll)
+            {
+                var isOwner = User.IsInRole(Roles.Owner);
+                <div class="card-pad stack">
+                    <p class="muted small">Website addresses belong to one company - choose a company in “Company” on the left to add them.</p>
+                    <form method="post" asp-antiforgery="true" action="/company/0/websites/server" class="setting">
+                        <div>
+                            <div class="setting-title">
+                                <strong>SQL server address</strong>
+                                @if (!string.IsNullOrEmpty(Model.ServerAddress.Value) && Model.ServerAddress.On) { <span class="chip brand">changed</span> }
+                            </div>
+                            <div class="setting-meta">
+                                Used for every company: where a connection in the master says <span class="mono">localhost,1533</span>, the panels connect to this address instead.
+                                Empty = connections are used exactly as stored. Only owners can change it.<span class="tech"> · <span class="mono">@WebsiteStore.ServerKey</span></span>
+                            </div>
+                        </div>
+                        <label>
+                            <span class="sr-only">SQL server address</span>
+                            <input name="server" class="input mono" maxlength="260" value="@(Model.ServerAddress.On ? Model.ServerAddress.Value : "")" placeholder="SERVER,1433" disabled="@(!isOwner)" />
+                        </label>
+                        <div class="actions">@if (isOwner) { <button type="submit" class="btn sm">Save</button> }</div>
+                    </form>
+                </div>
+            }
+            else if (ws is null || !ws.Ready)
+            {
+                <p class="card-pad"><span class="flash error" style="display:block;margin:0">The table Cfg_CompanyHost is not in the master yet - run SuperAdminConfig\06_company_hosts.sql once.</span></p>
+            }
+            else
+            {
+                <div class="card-pad stack">
+                    <p class="muted small">
+                        The panels find the company by the website name they are opened on. Company website (URL):
+                        <strong class="mono">@(string.IsNullOrEmpty(ws.CompanyUrl) ? "(empty)" : ws.CompanyUrl)</strong>.
+                        If the member and admin panels use names like <span class="mono">cpanel.company.com</span> / <span class="mono">admin.company.com</span>, nothing is needed here.
+                        If they use different names (e.g. <span class="mono">aventureuser.bisplindia.in</span> and <span class="mono">aventureadmin.bisplindia.in</span>), add each one below.
+                    </p>
+                    @if (ws.Sites.Count == 0)
+                    {
+                        <p class="muted">No addresses yet - the panels use the company website above, as today.</p>
+                    }
+                    else
+                    {
+                        <div class="table-wrap">
+                            <table class="table">
+                                <thead><tr><th>Panel</th><th>Website</th><th>Status</th><th class="hide-sm">Added</th><th></th></tr></thead>
+                                <tbody>
+                                    @foreach (var s in ws.Sites)
+                                    {
+                                        <tr>
+                                            <td>@(WebsiteStore.Panels.FirstOrDefault(p => p.Key == s.Panel).Name ?? s.Panel)</td>
+                                            <td class="mono">@s.Host</td>
+                                            <td>@if (s.IsActive) { <span class="chip brand">on</span> } else { <span class="chip">off</span> }</td>
+                                            <td class="hide-sm small muted">@s.AddDate.ToString("dd MMM yyyy")@(string.IsNullOrEmpty(s.AddedBy) ? "" : $" · {s.AddedBy}")</td>
+                                            <td style="white-space:nowrap">
+                                                @if (canEdit)
+                                                {
+                                                    <form method="post" asp-antiforgery="true" action="/company/@c.Id/websites/active" style="display:inline">
+                                                        <input type="hidden" name="hostId" value="@s.HostID" />
+                                                        <input type="hidden" name="active" value="@(s.IsActive ? "false" : "true")" />
+                                                        <button type="submit" class="btn sm ghost">@(s.IsActive ? "Switch off" : "Switch on")</button>
+                                                    </form>
+                                                    <form method="post" asp-antiforgery="true" action="/company/@c.Id/websites/remove" style="display:inline"
+                                                          onsubmit="return confirm('Remove @s.Host? The @s.Panel panel will no longer open this company on it.');">
+                                                        <input type="hidden" name="hostId" value="@s.HostID" />
+                                                        <button type="submit" class="btn sm ghost">Remove</button>
+                                                    </form>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    @if (canEdit)
+                    {
+                        <form method="post" asp-antiforgery="true" action="/company/@c.Id/websites/add" class="setting">
+                            <div>
+                                <div class="setting-title"><strong>Add a website</strong></div>
+                                <div class="setting-meta">Only the name, e.g. aventureadmin.bisplindia.in - http:// and anything after / are cut off.</div>
+                            </div>
+                            <label>
+                                <span class="sr-only">Panel</span>
+                                <select name="panel" class="input">
+                                    @foreach (var p in WebsiteStore.Panels) { <option value="@p.Key">@p.Name</option> }
+                                </select>
+                            </label>
+                            <label>
+                                <span class="sr-only">Website</span>
+                                <input name="host" class="input" maxlength="200" placeholder="aventureadmin.bisplindia.in" required />
+                            </label>
+                            <div class="actions"><button type="submit" class="btn sm">Add</button></div>
+                        </form>
+                    }
+                </div>
+            }
+            break;
+
+        case "details":
+            var dt = Model.Details;
+            if (isAll)
+            {
+                <p class="card-pad muted">Company details (name, address, GST …) belong to one company. Choose a company in “Company” on the left.</p>
+            }
+            else if (dt is null || !dt.Reachable)
+            {
+                <p class="card-pad"><span class="flash error" style="display:block;margin:0">@(dt?.Problem ?? "The company's database could not be opened.")</span></p>
+            }
+            else
+            {
+                <form method="post" asp-antiforgery="true" action="/company/@c.Id/details/save" class="card-pad stack">
+                    <input type="hidden" name="rowId" value="@dt.RowId" />
+                    <p class="muted small">
+                        What is in the boxes is what the panels print today. Change a box and press Save - only the boxes you change are written.
+                        @if (!string.IsNullOrEmpty(dt.LastModified)) { <span class="faint">Last changed: @dt.LastModified</span> }
+                    </p>
+                    <fieldset class="details-grid" disabled="@(!canEdit)">
+                        <legend class="sr-only">Company details</legend>
+                        @foreach (var grp in CompanyDetailsStore.Fields.Where(f => dt.Values.ContainsKey(f.Column)).GroupBy(f => f.Group))
+                        {
+                            <div class="details-group wide">@grp.Key</div>
+                            @foreach (var f in grp)
+                            {
+                                var val = Model.DetailsTyped is not null && Model.DetailsTyped.TryGetValue(f.Column, out var tv) ? tv : dt.Values[f.Column];
+                                var max = dt.MaxLength[f.Column];
+                                <label class="field @(f.Kind == "multiline" ? "wide" : "")">
+                                    <span>@f.Label</span>
+                                    @if (f.Kind == "multiline")
+                                    {
+                                        <textarea name="@f.Column" class="input" rows="3" maxlength="@(max > 0 ? max : null)">@val</textarea>
+                                    }
+                                    else if (f.Kind == "state" && dt.States.Count > 0)
+                                    {
+                                        <select name="@f.Column" class="input">
+                                            <option value="">- choose -</option>
+                                            @foreach (var s in dt.States)
+                                            {
+                                                <option value="@s.Code" selected="@(val == s.Code.ToString())">@s.Name</option>
+                                            }
+                                            @if (!string.IsNullOrEmpty(val) && dt.States.All(s => s.Code.ToString() != val))
+                                            {
+                                                <option value="@val" selected>Code @val (not in the state list)</option>
+                                            }
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <input name="@f.Column" class="input @(f.Kind is "gst" or "gstish" or "pan" ? "mono" : "")" value="@val"
+                                               maxlength="@(max > 0 ? max : null)"
+                                               inputmode="@(f.Kind switch { "phone" => "tel", "email" => "email", "state" => "numeric", _ => "text" })"
+                                               autocapitalize="@(f.Kind is "gst" or "gstish" or "pan" ? "characters" : null)" />
+                                    }
+                                    @if (f.Hint is not null) { <span class="faint small">@f.Hint</span> }
+                                </label>
+                            }
+                        }
+                    </fieldset>
+                    @if (canEdit)
+                    {
+                        <div class="row"><button type="submit" class="btn">Save company details</button></div>
+                    }
+                </form>
+            }
+            break;
+
+        case "branding":
+            var bo = Model.Brand;
+            var bd = Model.BrandDefault;
+            // What a panel will actually use: this company, else All companies, else today's look.
+            var effPrimary = SafeColor(bo?.PrimaryColor) ?? SafeColor(bd?.PrimaryColor);
+            var effSecondary = SafeColor(bo?.SecondaryColor) ?? SafeColor(bd?.SecondaryColor);
+            var effLogo = SafeUrl(bo?.LogoUrl) ?? SafeUrl(bd?.LogoUrl) ?? SafeUrl(c.Logo);
+            var effBg = SafeUrl(bo?.LoginBgUrl) ?? SafeUrl(bd?.LoginBgUrl);
+            var effTagline = bo?.LoginTagline ?? bd?.LoginTagline;
+            var effFooter = bo?.FooterText ?? bd?.FooterText;
+            var effCopy = bo?.CopyrightText ?? bd?.CopyrightText;
+            (string Name, string Label, string? Own, string? Def, string Hint, int Max, string Kind)[] brandFields =
+            [
+                ("logo", "Logo", bo?.LogoUrl, bd?.LogoUrl, "Web address of the logo image (https://…)", 500, "url"),
+                ("favicon", "Browser icon", bo?.FaviconUrl, bd?.FaviconUrl, "Small icon shown in the browser tab", 500, "url"),
+                ("primary", "Main colour", bo?.PrimaryColor, bd?.PrimaryColor, "Buttons, links, highlights - e.g. #1F5FBF", 7, "color"),
+                ("secondary", "Second colour", bo?.SecondaryColor, bd?.SecondaryColor, "Login side panel and headers - e.g. #00254E", 7, "color"),
+                ("loginBg", "Login background image", bo?.LoginBgUrl, bd?.LoginBgUrl, "Picture behind the login welcome panel", 500, "url"),
+                ("tagline", "Login welcome line", bo?.LoginTagline, bd?.LoginTagline, "Short line under “Welcome”", 300, "text"),
+                ("footer", "Footer text", bo?.FooterText, bd?.FooterText, "Shown at the bottom of the panels", 500, "text"),
+                ("copyright", "Copyright line", bo?.CopyrightText, bd?.CopyrightText, "e.g. © 2026 Your Company", 300, "text"),
+            ];
+            <div class="brand-layout">
+                <form method="post" asp-antiforgery="true" action="/company/@c.Id/branding/save" class="card-pad stack" id="brand-form">
+                    <p class="muted small">Leave a box empty to keep @(isAll ? "today's look" : "the All-companies value (or today's look)"). Only what you fill in changes the panels.</p>
+                    <fieldset class="brand-grid" disabled="@(!canEdit)">
+                        <legend class="sr-only">Branding</legend>
+                        @foreach (var f in brandFields)
+                        {
+                            <label class="field">
+                                <span>@f.Label @if (f.Own is null && f.Def is not null) { <span class="chip info">All companies</span> }</span>
+                                <span class="row" style="flex-wrap:nowrap">
+                                    @if (f.Kind == "color")
+                                    {
+                                        <span class="swatch" data-swatch-for="@f.Name" style="background:@(SafeColor(f.Own) ?? SafeColor(f.Def) ?? "transparent")" aria-hidden="true"></span>
+                                    }
+                                    <input name="@f.Name" class="input @(f.Kind == "color" ? "mono" : "")" value="@f.Own" maxlength="@f.Max"
+                                           placeholder="@(f.Def ?? "as today")" data-preview="@f.Name" inputmode="@(f.Kind == "url" ? "url" : "text")" />
+                                </span>
+                                <span class="faint small">@f.Hint</span>
+                            </label>
+                        }
+                    </fieldset>
+                    @if (canEdit)
+                    {
+                        <div class="row">
+                            <button type="submit" class="btn">Save logo &amp; colours</button>
+                            @if (bo is not null)
+                            {
+                                <button type="button" class="btn ghost" data-clear-brand>Clear all (back to @(isAll ? "today" : "default"))</button>
+                            }
+                        </div>
+                    }
+                </form>
+
+                <aside class="brand-preview-wrap" aria-label="Preview of the login page">
+                    <p class="faint small" style="margin-bottom:8px">Preview - login page</p>
+                    <div class="bp" id="brand-preview"
+                         style="--bp-primary:@(effPrimary ?? "#1F5FBF"); --bp-secondary:@(effSecondary ?? "#00254E")">
+                        <div class="bp-form">
+                            @* Both are always there; the letter shows when there is no logo or it cannot load. *@
+                            <span class="bp-mark" data-bp-mark hidden="@(effLogo is not null)">@(string.IsNullOrEmpty(c.Name) ? "M" : c.Name[..1])</span>
+                            <img class="bp-logo" src="@effLogo" alt="" data-bp-logo hidden="@(effLogo is null)" />
+                            <div class="bp-title">Sign in</div>
+                            <div class="bp-input"></div>
+                            <div class="bp-input"></div>
+                            <div class="bp-btn">Sign in</div>
+                        </div>
+                        <div class="bp-side" data-bp-side style="@(effBg is null ? "" : $"background-image:linear-gradient(150deg,rgba(0,0,0,.55),rgba(0,0,0,.35)),url('{effBg}')")">
+                            <div class="bp-big">Welcome</div>
+                            <div class="bp-tag" data-bp-tagline>@(effTagline ?? "Sign in to continue")</div>
+                        </div>
+                    </div>
+                    <p class="bp-foot small faint" data-bp-footer>@effFooter</p>
+                    <p class="bp-foot small faint" data-bp-copyright>@effCopy</p>
+                </aside>
+            </div>
+            break;
+
+        case "menus":
+            var mp = Model.MenuPanel!;
+            <div class="card-pad row" style="justify-content:space-between; border-bottom:1px solid var(--line)">
+                <div class="row">
+                    @foreach (var pp in MenuStore.Panels)
+                    {
+                        <a class="btn sm @(pp.Key == mp.Key ? "" : "ghost")" href="/company/@c.Id/menus?panel=@pp.Key" aria-current="@(pp.Key == mp.Key ? "page" : null)">@pp.Name</a>
+                    }
+                </div>
+                @if (!isAll)
+                {
+                    <span class="faint small">@Model.Menu.Count(m => m.Shown) of @Model.Menu.Count shown · changes show in the panel on its next page</span>
+                }
+            </div>
+            @if (isAll)
+            {
+                <p class="card-pad muted">Menus are set for each company separately. Open a company to change its menus.</p>
+            }
+            else if (Model.Menu.Count == 0)
+            {
+                <p class="card-pad muted">This company has no @mp.Name.ToLowerInvariant() rows yet. Add menus from the master list below.</p>
+            }
+            else
+            {
+                var byParent = Model.Menu.GroupBy(m => m.ParentId).ToDictionary(g => g.Key, g => g.ToList());
+                var ids = Model.Menu.Select(m => m.MenuId).ToHashSet();
+                var dupIds = Model.Menu.GroupBy(m => m.MenuId).Where(g => g.Count() > 1).Select(g => g.Key).ToHashSet();
+                // Top level = ParentId 0, plus rows whose parent this company does not have (so nothing is lost).
+                var tops = Model.Menu.Where(m => m.ParentId == 0 || !ids.Contains(m.ParentId)).ToList();
+                <div class="list menu-list">
+                    <div class="menu-head small faint">
+                        <span>Menu</span><span>Name</span><span>Order</span><span>Link</span><span>Shown</span><span></span>
+                    </div>
+                    @foreach (var top in tops)
+                    {
+                        var kids = top.ParentId == 0 && byParent.TryGetValue(top.MenuId, out var k) ? k : new List<MenuStore.MenuRow>();
+                        foreach (var m in new[] { top }.Concat(kids))
+                        {
+                            var isKid = m != top;
+                            <form method="post" asp-antiforgery="true" action="/company/@c.Id/menus/save" class="menu-row @(isKid ? "kid" : "top") @(m.Shown ? "" : "is-hidden")">
+                                <input type="hidden" name="panel" value="@mp.Key" />
+                                <input type="hidden" name="aid" value="@m.AId" />
+                                <div class="menu-id">
+                                    <span class="mono faint">#@m.MenuId</span>
+                                    @if (!m.Shown) { <span class="chip">hidden</span> }
+                                    @if (m.IsDash) { <span class="chip" title="The panel skips items named “-”">spacer</span> }
+                                    @if (dupIds.Contains(m.MenuId)) { <span class="chip danger" title="This company has this menu more than once">duplicate</span> }
+                                    @if (!m.InMaster) { <span class="chip" title="Not in the master menu list">extra</span> }
+                                    @if (m.ParentId != 0 && !ids.Contains(m.ParentId)) { <span class="chip danger" title="Its parent menu is missing for this company">no parent</span> }
+                                </div>
+                                <label><span class="sr-only">Name</span><input name="name" class="input" value="@m.MenuName" maxlength="@mp.NameMax" required disabled="@(!canEdit)" /></label>
+                                <label><span class="sr-only">Order</span><input name="order" class="input mono" value="@m.Hierar" maxlength="20" inputmode="decimal" disabled="@(!canEdit)" /></label>
+                                <label><span class="sr-only">Link</span><input name="link" class="input mono" value="@m.OnSelect" maxlength="@mp.LinkMax" placeholder="no link" disabled="@(!canEdit)" /></label>
+                                <label class="row" style="flex-wrap:nowrap; gap:6px"><input type="checkbox" name="shown" value="true" checked="@m.Shown" disabled="@(!canEdit)" /><span class="small">Shown</span></label>
+                                <div class="actions">@if (canEdit) { <button type="submit" class="btn sm">Save</button> }</div>
+                            </form>
+                        }
+                    }
+                </div>
+            }
+            @if (!isAll && Model.MenuMissing.Count > 0)
+            {
+                <details class="card-pad" style="border-top:1px solid var(--line)">
+                    <summary><strong>Add from the master list</strong> <span class="faint small">· @Model.MenuMissing.Count menus this company does not have</span></summary>
+                    <div class="table-wrap" style="margin-top:10px">
+                        <table class="table">
+                            <thead><tr><th>Menu</th><th>Name</th><th>Order</th><th class="hide-sm">Link</th><th></th></tr></thead>
+                            <tbody>
+                                @foreach (var m in Model.MenuMissing)
+                                {
+                                    <tr>
+                                        <td class="mono faint">#@m.MenuId@(m.ParentId == 0 ? "" : $" ← #{m.ParentId}")</td>
+                                        <td>@m.MenuName</td>
+                                        <td class="mono small">@m.Hierar</td>
+                                        <td class="hide-sm mono small muted">@m.OnSelect</td>
+                                        <td>
+                                            @if (canEdit)
+                                            {
+                                                <form method="post" asp-antiforgery="true" action="/company/@c.Id/menus/add">
+                                                    <input type="hidden" name="panel" value="@mp.Key" />
+                                                    <input type="hidden" name="menuId" value="@m.MenuId" />
+                                                    <button type="submit" class="btn ghost sm">Add</button>
+                                                </form>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+            }
+            break;
+
+        case "dashboard":
+            <div class="card-pad" style="border-bottom:1px solid var(--line)">
+                <p class="muted small">
+                    “As today” = the box stays exactly as now for this company. Boxes marked <span class="chip">hide only</span> show data that
+                    only some companies have, so they can be hidden but not switched on.
+                </p>
+            </div>
+            <div class="list">
+                @foreach (var b in Catalog.Dashboard)
+                {
+                    Model.Layer.Own.TryGetValue($"dash.{b.Key}.show", out var showOwn);
+                    Model.Layer.Inherited.TryGetValue($"dash.{b.Key}.show", out var showInh);
+                    Model.Layer.Own.TryGetValue($"dash.{b.Key}.width", out var widthOwn);
+                    Model.Layer.Inherited.TryGetValue($"dash.{b.Key}.width", out var widthInh);
+                    Model.DashLabels.Own.TryGetValue($"dash.{b.Key}.title", out var titleOwn);
+                    Model.DashLabels.Inherited.TryGetValue($"dash.{b.Key}.title", out var titleInh);
+                    var anyOwn = showOwn is not null || widthOwn is not null || titleOwn is not null;
+                    var inhParts = new List<string>();
+                    if (showInh is not null) inhParts.Add(showInh.Value == "show" ? "Shown" : "Hidden");
+                    if (widthInh is not null) inhParts.Add(Catalog.DashWidths.FirstOrDefault(w => w.Value == widthInh.Value).Label ?? widthInh.Value!);
+                    if (titleInh is not null) inhParts.Add($"“{titleInh.Value}”");
+                    <form method="post" asp-antiforgery="true" action="/company/@c.Id/dashboard/save" class="setting field-row">
+                        <input type="hidden" name="block" value="@b.Key" />
+                        <div>
+                            <div class="setting-title">
+                                <strong>@(titleOwn?.Value ?? b.Today)</strong>
+                                @if (anyOwn) { <span class="chip brand">changed</span> }
+                                @if (inhParts.Count > 0) { <span class="chip info">All companies: @string.Join(" · ", inhParts)</span> }
+                                @if (!b.CanShow) { <span class="chip">hide only</span> }
+                            </div>
+                            <div class="setting-meta">Today: @b.Note<span class="tech"> · <span class="mono">dash.@b.Key</span></span></div>
+                        </div>
+                        <fieldset class="field-controls" disabled="@(!canEdit)">
+                            <legend class="sr-only">@b.Today</legend>
+                            <label class="field">Show
+                                <select name="show" class="input">
+                                    <option value="">As today</option>
+                                    @if (b.CanShow) { <option value="show" selected="@(showOwn?.Value == "show")">Show</option> }
+                                    <option value="hide" selected="@(showOwn?.Value == "hide")">Hide</option>
+                                </select>
+                            </label>
+                            @if (b.CanResize)
+                            {
+                                <label class="field">Width
+                                    <select name="width" class="input">
+                                        <option value="">As today</option>
+                                        @foreach (var w in Catalog.DashWidths)
+                                        {
+                                            <option value="@w.Value" selected="@(widthOwn?.Value == w.Value)">@w.Label</option>
+                                        }
+                                    </select>
+                                </label>
+                            }
+                            @if (b.HasTitle)
+                            {
+                                <label class="field">Title
+                                    <input name="title" class="input" value="@titleOwn?.Value" maxlength="100" placeholder="@(titleInh?.Value ?? b.Today)" />
+                                </label>
+                            }
+                        </fieldset>
+                        <div class="actions">@if (canEdit) { <button type="submit" class="btn sm">Save</button> }</div>
+                    </form>
+                }
+            </div>
+            break;
+
+        case "panel":
+            <div class="card-pad stack" style="border-bottom:1px solid var(--line); gap:12px">
+                <div class="row">
+                    @foreach (var pn in SettingsCatalog.PanelNames)
+                    {
+                        <a class="btn sm @(pn.Key == Model.SettingsPanel ? "" : "ghost")" href="/company/@c.Id/panel?panel=@pn.Key"
+                           aria-current="@(pn.Key == Model.SettingsPanel ? "page" : null)">@pn.Name <span class="faint">@Model.SettingsCountByPanel.GetValueOrDefault(pn.Key)</span></a>
+                    }
+                </div>
+                <form method="get" action="/company/@c.Id/panel" class="row" role="search">
+                    <input type="hidden" name="panel" value="@Model.SettingsPanel" />
+                    <label class="sr-only" for="pg">Page</label>
+                    <select id="pg" name="page" class="input" style="max-width:320px" onchange="this.form.submit()">
+                        <option value="">All pages (@Model.SettingsPages.Sum(p => p.Count))</option>
+                        @foreach (var pg in Model.SettingsPages)
+                        {
+                            <option value="@pg.Page" selected="@(string.Equals(pg.Page, Model.SettingsPage, StringComparison.OrdinalIgnoreCase))">@(HasPageTitle(pg.Page) ? $"{PageTitle(pg.Page)} - {pg.Page}" : pg.Page) (@pg.Count)</option>
+                        }
+                    </select>
+                    @* Searching is done by "Find on this page" below (all rows of the panel are on the page). An old ?q= link still works. *@
+                    @if (!string.IsNullOrEmpty(Model.SettingsQuery))
+                    {
+                        <input type="hidden" name="q" value="@Model.SettingsQuery" />
+                        <span class="chip info">Filtered: “@Model.SettingsQuery”</span>
+                        <a class="small" href="/company/@c.Id/panel?panel=@Model.SettingsPanel&page=@Model.SettingsPage">Show all</a>
+                    }
+                </form>
+                <p class="faint small">Choose a page above, or type a word like “withdraw”, “kyc” or “pv” in “Find on this page” below. “As today” = the page keeps working exactly as now (see the “Today” line).
+                    <span class="chip danger">Advanced - test first</span> settings can stop a page working for a company whose data is different - change them only after testing.</p>
+            </div>
+            @if (Model.Settings.Count == 0)
+            {
+                <p class="card-pad muted">No settings here yet@(Model.SettingsCountByPanel.GetValueOrDefault(Model.SettingsPanel) == 0 ? " - this panel's pages are still being converted" : " for this search").</p>
+            }
+            else
+            {
+                <div class="list">
+                    @foreach (var grp in Model.Settings.GroupBy(s => s.Page, StringComparer.OrdinalIgnoreCase))
+                    {
+                        <div class="group-head">
+                            @if (HasPageTitle(grp.Key)) { <span>@PageTitle(grp.Key)</span> <span class="page-file">@grp.Key</span> }
+                            else { @grp.Key }
+                        </div>
+                        @foreach (var s in grp)
+                        {
+                            ConfigStore.Entry? own = null, inh = null;
+                            if (s.Kind == "label") { Model.DashLabels.Own.TryGetValue(s.Key, out own); Model.DashLabels.Inherited.TryGetValue(s.Key, out inh); }
+                            else { Model.Layer.Own.TryGetValue(s.Key, out own); Model.Layer.Inherited.TryGetValue(s.Key, out inh); }
+                            string Show(ConfigStore.Entry e) => s.Kind == "switch" ? (e.IsEnabled ? "On" : "Off") : e.Value ?? "";
+                            <form method="post" asp-antiforgery="true" action="/company/@c.Id/panel/save" class="setting"
+                                  data-advanced="@(s.Advanced ? "1" : null)">
+                                <input type="hidden" name="key" value="@s.Key" />
+                                <input type="hidden" name="panel" value="@Model.SettingsPanel" />
+                                <input type="hidden" name="page" value="@Model.SettingsPage" />
+                                <input type="hidden" name="q" value="@Model.SettingsQuery" />
+                                <div>
+                                    <div class="setting-title">
+                                        <strong>@s.Label</strong>
+                                        @if (s.Advanced) { <span class="chip danger" title="Chooses which query / save / layout runs. Turning it on for a company whose data is different can break this page.">Advanced - test first</span> }
+                                        @if (own is not null) { <span class="chip brand">changed: @Show(own)</span> }
+                                        @if (inh is not null) { <span class="chip info">All companies: @Show(inh)</span> }
+                                    </div>
+                                    <div class="setting-meta">Today: @(s.Today ?? "the page's own rule")<span class="tech"> · <span class="mono">@s.Key</span></span></div>
+                                </div>
+                                @if (s.Kind == "switch")
+                                {
+                                    var st = own is null ? "" : own.IsEnabled ? "on" : "off";
+                                    <fieldset class="row" style="border:0; margin:0; padding:0" disabled="@(!canEdit)">
+                                        <legend class="sr-only">@s.Label</legend>
+                                        <div class="seg">
+                                            <label><input type="radio" name="value" value="" checked="@(st == "")" />As today</label>
+                                            <label><input type="radio" name="value" value="on" checked="@(st == "on")" />On</label>
+                                            <label><input type="radio" name="value" value="off" checked="@(st == "off")" />Off</label>
+                                        </div>
+                                    </fieldset>
+                                }
+                                else
+                                {
+                                    <label>
+                                        <span class="sr-only">@s.Label</span>
+                                        <input name="value" class="input" value="@own?.Value" placeholder="@(inh?.Value ?? "as today")"
+                                               inputmode="@(s.Kind == "number" ? "decimal" : "text")" maxlength="@(s.Kind == "label" ? 500 : 1000)" disabled="@(!canEdit)" />
+                                    </label>
+                                }
+                                <div class="actions">@if (canEdit) { <button type="submit" class="btn sm">Save</button> }</div>
+                            </form>
+                        }
+                    }
+                </div>
+            }
+            break;
+
+        case "changes":
+            @if (Model.Changes.Count == 0)
+            {
+                <p class="muted card-pad">Nothing has been changed for this company yet.</p>
+            }
+            else
+            {
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead><tr><th>When</th><th>What</th><th>Change</th><th class="hide-sm">By</th></tr></thead>
+                        <tbody>
+                            @foreach (var ch in Model.Changes)
+                            {
+                                <tr>
+                                    <td class="small muted" style="white-space:nowrap">@ch.ChangedAt.ToString("dd MMM yyyy, HH:mm")</td>
+                                    <td>
+                                        @{ var ps = SettingsCat.Find(ch.ItemKey); }
+                                        <span class="chip">@(ps is not null ? "Panel setting" : ch.ItemKey.StartsWith("dash.") ? "Member dashboard" : Catalog.AreaName(ch.Area))</span> @(ps?.Label ?? Catalog.ItemName(ch.Area, ch.ItemKey))
+                                        @if (ch.CompanyID == 0 && !isAll) { <span class="chip info">All companies</span> }
+                                        <div class="faint mono tech" style="font-size:11.5px">@ch.ItemKey</div>
+                                    </td>
+                                    <td class="small">
+                                        @{
+                                            var cs = SettingsCat.Find(ch.ItemKey);
+                                            // Switch values are stored "1|1" / "0|0" (value|enabled).
+                                            string? R(string? raw) => raw is null ? null
+                                                : cs?.Kind == "switch" ? (raw.EndsWith("|1") ? "On" : "Off")
+                                                : Catalog.Readable(ch.Area, ch.ItemKey, raw);
+                                        }
+                                        @if (ch.OldValue is not null) { <span class="old">@R(ch.OldValue)</span> }
+                                        →
+                                        @(ch.NewValue is null ? "reset (as today)" : R(ch.NewValue))
+                                    </td>
+                                    <td class="hide-sm small muted">@ch.ChangedBy</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            break;
+    }
+</div>

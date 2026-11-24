@@ -1,0 +1,73 @@
+﻿@model IReadOnlyList<SuperAdmin.Data.CompanyStore.Company>
+@{
+    ViewData["Title"] = "Companies";
+    var q = ViewBag.Query as string;
+}
+@if (Context.Request.Query.ContainsKey("pick"))
+{
+    <div class="flash error" role="alert">First choose a company - in “Company” on the left, or with “Open” in the list below.</div>
+}
+<div class="page-head">
+    <div>
+        <h1>Companies</h1>
+        <p class="muted">Pick a company to set how its panels look and work. Nothing changes on a panel until it is saved here.</p>
+    </div>
+    <form method="get" action="/" class="row" role="search">
+        <label class="sr-only" for="q">Search companies</label>
+        <input id="q" name="q" value="@q" class="input" style="width:240px" placeholder="Name, website or ID" />
+        <button type="submit" class="btn ghost">Search</button>
+        @if (User.IsInRole(SuperAdmin.Data.Roles.Owner))
+        {
+            <a class="btn" href="/companies/new">+ New company</a>
+        }
+    </form>
+</div>
+
+<div class="steps" aria-label="How to use Super Admin">
+    <div class="card step"><b>1</b><div><strong>Choose the company</strong><p class="muted">Click its row below, or pick it in “Company” on the left.</p></div></div>
+    <div class="card step"><b>2</b><div><strong>Choose what to change</strong><p class="muted">Business Terms, Joining &amp; Profile Forms, Logo &amp; Colours, Menus … on the left. Each page says what it changes.</p></div></div>
+    <div class="card step"><b>3</b><div><strong>Change and press Save</strong><p class="muted">Empty / “As today” = the panel stays as it is now. Every save is in the Change log.</p></div></div>
+</div>
+
+<div class="card">
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Company</th>
+                    <th class="hide-sm">Website</th>
+                    <th>Status</th>
+                    <th style="text-align:right">Settings</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-href="/company/0">
+                    <td class="faint">0</td>
+                    <td><strong>All companies</strong><div class="faint small">The default every company starts from</div></td>
+                    <td class="hide-sm faint">—</td>
+                    <td><span class="chip info">Default</span></td>
+                    <td class="num">—</td>
+                    <td><a class="btn ghost sm" href="/company/0">Open</a></td>
+                </tr>
+                @foreach (var c in Model)
+                {
+                    <tr data-href="/company/@c.Id">
+                        <td class="faint">@c.Id</td>
+                        <td><strong>@c.Name</strong></td>
+                        <td class="hide-sm small muted">@c.Url</td>
+                        <td>@if (c.IsActive) { <span class="chip ok">Active</span> } else { <span class="chip">Inactive</span> }</td>
+                        <td class="num">@if (c.SettingsCount > 0) { <span class="chip brand">@c.SettingsCount changed</span> } else { <span class="faint small">nothing changed</span> }</td>
+                        <td><a class="btn ghost sm" href="/company/@c.Id">Open</a></td>
+                    </tr>
+                }
+                @if (Model.Count == 0)
+                {
+                    <tr><td colspan="6" class="muted" style="padding:28px 16px; text-align:center">No company matches “@q”.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<p class="faint small" style="margin-top:10px">@Model.Count of @ViewBag.Total companies</p>

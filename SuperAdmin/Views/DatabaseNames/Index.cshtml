@@ -1,0 +1,140 @@
+@model SuperAdmin.Controllers.DatabaseNamesController.PageModel
+@{
+    ViewData["Title"] = "Database names";
+    var f = Model.Form;
+    var res = Model.Result;
+}
+<div class="page-head">
+    <div>
+        <h1>Database names</h1>
+        <p class="muted">After copying a company's databases (e.g. <span class="mono">pulstya</span> → <span class="mono">harbalworld</span>), the stored procedures, views, functions and triggers still name the old databases. Set the names here once and every one of them is fixed.</p>
+    </div>
+</div>
+
+<div class="card">
+    <ol class="card-pad stack small muted" style="margin:0; padding-left:34px">
+        <li>Fill the boxes and press <em>Check</em>. Everything is tried inside a transaction and undone - nothing changes - and you see what would change.</li>
+        <li>If there are no failures, type the password again and press <em>Apply</em>. Each database is saved only if all its objects changed without an error.</li>
+        <li>Only database names are changed: <span class="mono">pulstya..X</span>, <span class="mono">pulstya.dbo.X</span>, <span class="mono">pulstyainv..X</span> (the ending inv / select / invselect is kept). Columns like <span class="mono">a.pulstya</span>, table.column like <span class="mono">pulstyaTemp.Col</span>, parameters like <span class="mono">@@pulstya</span>, text in quotes like <span class="mono">'https://pulstya.com'</span> and comments are left as they are.</li>
+        <li>After <em>Check</em>, read the list of what would change in each object before you press <em>Apply</em>.</li>
+    </ol>
+</div>
+
+<form method="post" asp-antiforgery="true" action="/tools/database-names/check" class="card card-pad stack" style="margin-top:16px" autocomplete="off">
+    <div class="details-grid">
+        <label class="field">
+            <span>Old name (copied from)</span>
+            <input name="OldName" class="input mono" value="@f.OldName" maxlength="100" required placeholder="pulstya" autocapitalize="off" spellcheck="false" />
+        </label>
+        <label class="field">
+            <span>New name (this company)</span>
+            <input name="NewName" class="input mono" value="@f.NewName" maxlength="100" required placeholder="harbalworld" autocapitalize="off" spellcheck="false" />
+        </label>
+        <label class="field wide">
+            <span>Databases to fix</span>
+            <input name="Databases" class="input mono" value="@f.Databases" maxlength="2000" required placeholder="harbalworld, harbalworldinv, harbalworldselect, harbalworldinvselect" autocapitalize="off" spellcheck="false" />
+            <span class="faint small">The new company's databases, separated by commas.</span>
+        </label>
+        <label class="field">
+            <span>SQL server</span>
+            <input name="Server" class="input mono" value="@f.Server" maxlength="260" required autocapitalize="off" spellcheck="false" />
+        </label>
+        <label class="field">
+            <span>Login</span>
+            <input name="Login" class="input mono" value="@f.Login" maxlength="128" required autocapitalize="off" spellcheck="false" />
+        </label>
+        <label class="field">
+            <span>Password</span>
+            <input name="Password" type="password" class="input" maxlength="256" required autocomplete="new-password" />
+            <span class="faint small">Used for this run only - never saved, never shown again.</span>
+        </label>
+    </div>
+    <div class="row" style="gap:8px">
+        <button type="submit" class="btn">Check</button>
+        <button type="submit" class="btn ghost" formaction="/tools/database-names/apply"
+                onclick="return confirm('Apply: rewrite the database names inside the procedures, views, functions and triggers of these databases?');">Apply</button>
+    </div>
+</form>
+
+@if (res is not null)
+{
+    <div class="card" style="margin-top:16px">
+        @if (res.Errors.Count > 0)
+        {
+            <div class="card-pad">
+                @foreach (var e in res.Errors) { <p class="flash error" style="margin:0 0 6px">@e</p> }
+            </div>
+        }
+        else
+        {
+            <div class="card-pad">
+                @if (Model.WasApply)
+                {
+                    <p class="flash @(res.Applied ? "ok" : "error")" style="margin:0">
+                        @(res.Applied ? $"Applied: {res.Changed} objects, {res.References} references changed." : "Nothing was saved - see the failures below.")
+                    </p>
+                }
+                else
+                {
+                    <p class="flash ok" style="margin:0">Check only - nothing was changed. Would change @res.Changed objects (@res.References references), @res.Failed failure(s).</p>
+                }
+            </div>
+            <div class="table-wrap">
+                <table class="table">
+                    <thead><tr><th>Database</th><th>Objects with the old name</th><th>Changed</th><th>References</th><th>Failures</th><th>Encrypted (not readable)</th><th>Result</th></tr></thead>
+                    <tbody>
+                        @foreach (var d in res.Databases)
+                        {
+                            <tr>
+                                <td class="mono">@d.Database</td>
+                                @if (!d.Opened)
+                                {
+                                    <td colspan="6"><span class="chip">not opened</span> <span class="small">@d.Error</span></td>
+                                }
+                                else
+                                {
+                                    <td>@d.Objects</td>
+                                    <td>@d.Changed</td>
+                                    <td>@d.References</td>
+                                    <td>@d.Failures.Count</td>
+                                    <td>@d.Encrypted</td>
+                                    <td>@(d.Committed ? "saved" : Model.WasApply ? (d.Changed == 0 ? "nothing to change" : "NOT saved") : "check only")</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @foreach (var d in res.Databases.Where(x => x.Failures.Count > 0 || x.Skipped.Count > 0 || x.Encrypted > 0 || x.ChangedNames.Count > 0 || x.LeftInText.Count > 0))
+            {
+                <div class="card-pad small">
+                    <strong class="mono">@d.Database</strong>
+                    @if (d.ChangedNames.Count > 0)
+                    {
+                        <details open="@(d.ChangedNames.Count <= 15)">
+                            <summary>@(d.Committed ? "Changed" : "Would change"): @d.ChangedNames.Count object(s)</summary>
+                            <ul>@foreach (var x in d.ChangedNames) { <li class="mono">@x</li> }</ul>
+                        </details>
+                    }
+                    @if (d.LeftInText.Count > 0)
+                    {
+                        <div class="muted">The old name is also written inside quotes or comments here - NOT changed, please check by eye (e.g. a website address or a dynamic SQL text): <span class="mono">@string.Join(", ", d.LeftInText)</span></div>
+                    }
+                    @if (d.Failures.Count > 0)
+                    {
+                        <div>Failures:</div>
+                        <ul>@foreach (var x in d.Failures) { <li class="mono">@x</li> }</ul>
+                    }
+                    @if (d.Skipped.Count > 0)
+                    {
+                        <div class="muted">Mention the old name only as a column, table, parameter, text or comment (left unchanged): <span class="mono">@string.Join(", ", d.Skipped)</span></div>
+                    }
+                    @if (d.Encrypted > 0)
+                    {
+                        <div class="muted">@d.Encrypted encrypted object(s) cannot be read here - if they name the old database, they need their original source.</div>
+                    }
+                </div>
+            }
+        }
+    </div>
+}

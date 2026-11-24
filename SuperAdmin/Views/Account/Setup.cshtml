@@ -1,0 +1,56 @@
+@model SetupModel
+@{
+    Layout = "_AuthLayout";
+    ViewData["Title"] = "First-time setup";
+}
+<div>
+    <h1>First-time setup</h1>
+    <p class="muted small">Create the first Super Admin owner. This page works only once, while no user exists.</p>
+</div>
+@if (!Model.KeyConfigured)
+{
+    <div class="flash error" role="alert">
+        The setup key is not set on this server. Set <code>Setup:Key</code> in the site's settings first.
+    </div>
+}
+<form method="post" class="stack" novalidate>
+    <div asp-validation-summary="ModelOnly" class="validation-summary-errors" role="alert"></div>
+    <label class="field">
+        Setup key
+        <input asp-for="SetupKey" class="input" type="password" autocomplete="off" />
+        <span asp-validation-for="SetupKey" class="field-error"></span>
+    </label>
+    <label class="field">
+        Your name
+        <input asp-for="FullName" class="input" autocomplete="name" />
+        <span asp-validation-for="FullName" class="field-error"></span>
+    </label>
+    <label class="field">
+        User name
+        <input asp-for="UserName" class="input" autocomplete="username" />
+        <span asp-validation-for="UserName" class="field-error"></span>
+    </label>
+    <div class="row" style="gap:12px; align-items:flex-start">
+        <label class="field" style="flex:1 1 180px">
+            E-mail (optional)
+            <input asp-for="Email" class="input" autocomplete="email" />
+            <span asp-validation-for="Email" class="field-error"></span>
+        </label>
+        <label class="field" style="flex:1 1 140px">
+            Mobile (optional)
+            <input asp-for="Mobile" class="input" autocomplete="tel" />
+            <span asp-validation-for="Mobile" class="field-error"></span>
+        </label>
+    </div>
+    <label class="field">
+        Password (at least 10 characters)
+        <input asp-for="Password" class="input" autocomplete="new-password" />
+        <span asp-validation-for="Password" class="field-error"></span>
+    </label>
+    <label class="field">
+        Password again
+        <input asp-for="ConfirmPassword" class="input" autocomplete="new-password" />
+        <span asp-validation-for="ConfirmPassword" class="field-error"></span>
+    </label>
+    <button type="submit" class="btn block" disabled="@(!Model.KeyConfigured)">Create owner</button>
+</form>

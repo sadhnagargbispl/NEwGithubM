@@ -1,0 +1,15 @@
+@{
+    Layout = "_AuthLayout";
+    ViewData["Title"] = "One step left";
+}
+<div>
+    <h1>One step left</h1>
+    <p class="muted" style="margin-top:8px">
+        The Super Admin user tables are not on the master database yet.
+    </p>
+</div>
+<ol class="muted small" style="margin:0; padding-left:18px; line-height:1.8">
+    <li>Open <code>SuperAdminConfig\03_superadmin_users.sql</code> in SQL Server Management Studio.</li>
+    <li>Run it on the master database (the one the panels' <code>sconstr</code> points to).</li>
+    <li>Reload this page.</li>
+</ol>

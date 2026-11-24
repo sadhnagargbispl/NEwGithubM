@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] · Super Admin</title>
+    <script>
+        try { var t = localStorage.getItem('sa.theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) { }
+    </script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <main class="auth">
+        <div class="auth-card">
+            <div class="auth-form">
+                @RenderBody()
+            </div>
+            <div class="auth-side" aria-hidden="true">
+                <p>Super Admin</p>
+                <div class="big">Every panel.<br />One place.</div>
+                <ul>
+                    <li>Business terms, point names and rules per company</li>
+                    <li>A default for all companies, overridden per company</li>
+                    <li>Every change logged - who, what, when</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

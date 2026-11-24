@@ -1,0 +1,149 @@
+﻿@inject SuperAdmin.Data.CompanyStore CompanyList
+@{
+    var path = Context.Request.Path.Value ?? "/";
+    // The company being edited (URL, else the last one opened) and the open section.
+    var currentId = SuperAdmin.Data.CurrentCompany.Get(Context);
+    var currentTab = Context.Request.RouteValues.TryGetValue("tab", out var tv) && tv is string ts && ts.Length > 0 ? ts : "words";
+    var companies = User.Identity?.IsAuthenticated == true ? await CompanyList.ListAsync() : [];
+    var fullName = User.FindFirst("full_name")?.Value ?? User.Identity?.Name ?? "";
+    var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value ?? "";
+    bool Active(string prefix, bool exact = false) =>
+        exact ? path == prefix : path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] · Super Admin</title>
+    <script>
+        // Apply the saved theme before paint (no flash). Storage may be blocked.
+        try { var t = localStorage.getItem('sa.theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) { }
+        try { if (localStorage.getItem('sa.tech') === '1') document.documentElement.classList.add('show-tech'); } catch (e) { }
+    </script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <span class="brand-mark" aria-hidden="true">SA</span>
+                <span>
+                    <span class="brand-name">Super Admin</span><br />
+                    <span class="brand-sub">All panels · one place</span>
+                </span>
+            </div>
+            <nav aria-label="Main">
+                <a class="nav-link @(Active("/", true) ? "active" : "")" href="/">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" /><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" /><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" /><path d="M10 6h4M10 10h4M10 14h4M10 18h4" /></svg>
+                    All companies list
+                </a>
+                @if (User.IsInRole(SuperAdmin.Data.Roles.Owner))
+                {
+                    <a class="nav-link @(Active("/companies/new") ? "active" : "")" href="/companies/new">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 8v8M8 12h8" /></svg>
+                        New company
+                    </a>
+                    <a class="nav-link @(Active("/tools/database-names") ? "active" : "")" href="/tools/database-names">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3" /><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" /></svg>
+                        Database names
+                    </a>
+                }
+
+                @* 1. Pick the company. Everything below changes ONLY this company. *@
+                <div class="company-pick">
+                    <label for="companyPick" class="nav-head" style="margin:0 0 6px">Company</label>
+                    <select id="companyPick" class="input" data-company-pick data-tab="@currentTab" aria-describedby="companyPickHint">
+                        @if (currentId is null)
+                        {
+                            <option value="" selected>- Choose a company -</option>
+                        }
+                        @foreach (var co in companies)
+                        {
+                            <option value="@co.Id" selected="@(currentId == co.Id)">@co.Id · @co.Name</option>
+                        }
+                        <option value="0" selected="@(currentId == 0)">★ All companies (default for everyone)</option>
+                    </select>
+                    @{
+                        var currentName = currentId == 0 ? "All companies" : companies.FirstOrDefault(x => x.Id == currentId)?.Name;
+                    }
+                    @if (currentName is not null)
+                    {
+                        <p class="small" style="margin:8px 2px 0; font-weight:600; line-height:1.3">@currentName</p>
+                    }
+                    <p id="companyPickHint" class="faint" style="font-size:11.5px; margin:4px 2px 0">
+                        @(currentId == 0 ? "⚠ Settings below change ALL companies." : currentId is null ? "Choose a company to change its settings." : "Settings below change only this company.")
+                    </p>
+                </div>
+
+                @* 2. Each settings section, for the chosen company. *@
+                <p class="nav-head">Settings</p>
+                @foreach (var s in SuperAdmin.Data.CurrentCompany.Sections)
+                {
+                    var href = currentId is null ? "/?pick=1" : $"/company/{currentId}/{s.Tab}";
+                    var on = currentId is not null && path.StartsWith($"/company/{currentId}/{s.Tab}", StringComparison.OrdinalIgnoreCase)
+                             || (s.Tab == "words" && currentId is not null && string.Equals(path.TrimEnd('/'), $"/company/{currentId}", StringComparison.OrdinalIgnoreCase));
+                    <a class="nav-link @(on ? "active" : "") @(currentId is null ? "disabled-link" : "")" href="@href" aria-current="@(on ? "page" : null)" title="@s.Help">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="@s.Icon" /></svg>
+                        @s.Name
+                    </a>
+                }
+            </nav>
+            <div class="sidebar-foot">
+                <form method="post" action="/account/logout">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /></svg>
+                        Sign out
+                    </button>
+                </form>
+            </div>
+        </aside>
+        <div class="scrim" data-close-nav></div>
+
+        <div class="main">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="icon-btn menu-btn" data-open-nav aria-label="Open menu" aria-controls="sidebar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    </button>
+                    <span class="muted small">Every panel setting, for every company</span>
+                </div>
+                <div class="topbar-right">
+                    <label class="tech-toggle small muted" title="Also show the technical names (setting keys, page files, table names) - for developers">
+                        <input type="checkbox" data-tech-toggle /> Show codes
+                    </label>
+                    <button type="button" class="icon-btn" data-theme-toggle aria-label="Switch light / dark">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
+                    </button>
+                    <span class="row">
+                        <span class="avatar" aria-hidden="true">@(fullName.Length > 0 ? fullName[..1].ToUpperInvariant() : "?")</span>
+                        <span class="hide-sm small">@fullName <span class="faint">· @role</span></span>
+                    </span>
+                </div>
+            </header>
+
+            <main class="content">
+                @* Save results float at the top of the screen, so they are seen even when the page opens scrolled down at the row just saved. *@
+                <div class="toasts">
+                    @if (TempData["Flash"] is string ok)
+                    {
+                        <div class="flash ok toast" role="status" data-toast-auto>✓ @ok</div>
+                    }
+                    @if (TempData["FlashError"] is string err)
+                    {
+                        <div class="flash error toast" role="alert">⚠ @err <button type="button" class="toast-x" data-toast-close aria-label="Close">×</button></div>
+                    }
+                    @if (ViewData["FlashErrorNow"] is string errNow)
+                    {
+                        <div class="flash error toast" role="alert">⚠ @errNow <button type="button" class="toast-x" data-toast-close aria-label="Close">×</button></div>
+                    }
+                </div>
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
